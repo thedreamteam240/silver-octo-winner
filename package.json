@@ -1,5 +1,6 @@
 {
   "name": "silver-octo-winner",
+  "description": "The Silver Octo Winner application",
   "version": "0.1.0",
   "private": true,
   "scripts": {

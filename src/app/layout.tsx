@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Silver Octo Winner",
-  description: "The project for the 24-hour WebCup jam",
+  description: "The Silver Octo Winner application.",
 };
 
 export default function RootLayout({
