@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
 
+env:
+  NODE_VERSION: "22.13.1"
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -37,14 +40,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4.4.0
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Run linter
-        run: ${{ steps.detect-package-manager.outputs.runner }} eslint . --ext .js,.jsx,.ts,.tsx
+        run: ${{ steps.detect-package-manager.outputs.runner }} next lint
 
   build:
     runs-on: ubuntu-latest
@@ -74,7 +77,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4.4.0
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Restore cache
