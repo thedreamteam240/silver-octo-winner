@@ -7,13 +7,13 @@ export default function PicturesPicker() {
     return (
       <Theme radius="large">
         <AlertDialog.Root>
-          <AlertDialog.Trigger>
-            <Tooltip content="Import Pictures">
+          <Tooltip content="Import Pictures">
+            <AlertDialog.Trigger>
               <IconButton variant="ghost" size="4">
                 <ImageIcon width="22" height="22" />
               </IconButton>
-            </Tooltip>
-          </AlertDialog.Trigger>
+            </AlertDialog.Trigger>
+          </Tooltip>
           <AlertDialog.Content>
             <AlertDialog.Title className="flex items-center space-x-4">
               <ImageIcon width="22" height="22" />
@@ -34,6 +34,7 @@ export default function PicturesPicker() {
               <span className="border-2 border-dashed border-blue-500 w-fit h-fit rounded-2xl m-auto">
                 <Button size="2" variant="soft" color="blue">
                   <UploadIcon width="22" height="22" />
+                  <input type="file" accept="image/*" />
                   Import from your device
                 </Button>
               </span>

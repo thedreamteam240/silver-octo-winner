@@ -7,13 +7,13 @@ export default function VideosPicker() {
     return (
       <Theme radius="large">
         <AlertDialog.Root>
-          <AlertDialog.Trigger>
-            <Tooltip content="Import Videos">
+          <Tooltip content="Import Videos">
+            <AlertDialog.Trigger>
               <IconButton variant="ghost" size="4">
                 <VideoIcon width="22" height="22" />
               </IconButton>
-            </Tooltip>
-          </AlertDialog.Trigger>
+            </AlertDialog.Trigger>
+          </Tooltip>
           <AlertDialog.Content>
             <AlertDialog.Title className="flex items-center space-x-4">
               <VideoIcon width="22" height="22" />
@@ -34,6 +34,7 @@ export default function VideosPicker() {
               <span className="border-2 border-dashed border-blue-500 w-fit h-fit rounded-2xl m-auto">
                 <Button size="2" variant="soft" color="blue">
                   <UploadIcon width="22" height="22" />
+                <input type="file" accept="video/*" />
                   Import from your device
                 </Button>
               </span>
