@@ -46,11 +46,19 @@ const Image = sequelize.define('Image', {
 const StoryImage = sequelize.define('StoryImage', {
   story_id: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: Story,
+      key: 'id'
+    }
   },
   image_id: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: Image,
+      key: 'id'
+    }
   },
   x: {
     type: DataTypes.INTEGER,

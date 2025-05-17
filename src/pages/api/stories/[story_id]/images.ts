@@ -1,12 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
-import { Image, StoryImage } from '@/sequelize';
+import { Image, StoryImage, Story } from '@/sequelize';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Op } from 'sequelize';
 
 const createStoryImageSchema = z.object({
-  image_id: z.number()
+  image_id: z.number(),
+  x: z.number(),
+  y: z.number()
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {
@@ -20,6 +22,14 @@ async function handleGet(request: NextApiRequest, response: NextApiResponse) {
   const story_id = request.query.story_id;
   if (!story_id) {
     response.status(400).json({ error: 'story_id is required' });
+    return;
+  }
+
+  const story = await Story.findOne({
+    where: { id: story_id, user_email: session.user?.email }
+  });
+  if (!story) {
+    response.status(403).json({ error: 'Forbidden: You do not own this story' });
     return;
   }
 
@@ -61,11 +71,21 @@ async function handlePost(request: NextApiRequest, response: NextApiResponse) {
     return;
   }
 
+  const story = await Story.findOne({
+    where: { id: story_id, user_email: session.user?.email }
+  });
+  if (!story) {
+    response.status(403).json({ error: 'Forbidden: You do not own this story' });
+    return;
+  }
+
   try {
     const parsedData = createStoryImageSchema.parse(request.body);
     const story_image = await StoryImage.create({
       story_id: parseInt(story_id as string),
-      image_id: parsedData.image_id
+      image_id: parsedData.image_id,
+      x: parsedData.x,
+      y: parsedData.y
     });
     response.status(201).json(story_image);
   } catch (error) {
