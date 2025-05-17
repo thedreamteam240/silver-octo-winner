@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Card, Grid, Inset, Strong, Text } from "@radix-ui/themes";
+import { Box, Button, Card, Grid, Inset, Strong, Text } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import Loading from "@/components/Loading";
@@ -13,23 +13,28 @@ interface Story {
 }
 
 type StoryCardProps = {
+  id: number;
   title: string;
   description: string;
+  onStoryClick: (storyID: number) => void;
 }
 
-function StoryCard({ title, description }: StoryCardProps) {
+function StoryCard({ id, title, description, onStoryClick }: StoryCardProps) {
   return (
     <Box className="otot" maxWidth="500px" top="1">
       <Card size="3">
-        <Inset clip="padding-box" side="top" pb="current">
-        </Inset>
         <Text as="p" size="3"><Strong>{title}</Strong> {description}</Text>
+        <Button onClick={() => onStoryClick(id)}>View</Button>
       </Card>
     </Box>
   );
 }
 
-export default function StoryCardGrid() {
+type StoryCardGridProps = {
+  onStoryClick: (storyID: number) => void;
+}
+
+export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +64,7 @@ export default function StoryCardGrid() {
   return (
     <Grid columns="3" gap="6" rows="repeat(2, 500px)" width="auto">
       {stories.map((story) => (
-        <StoryCard title={story.title} description={story.description} key={story.title} />
+        <StoryCard id={story.id} title={story.title} description={story.description} key={story.title} onStoryClick={onStoryClick} />
       ))}
     </Grid>
   )
