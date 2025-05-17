@@ -3,6 +3,7 @@ import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme, ThemePanel } from "@radix-ui/themes";
 
+
 export const metadata: Metadata = {
   title: "Silver Octo Winner",
   description: "The Silver Octo Winner application.",
@@ -16,10 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Theme>
-          {children}
-          <ThemePanel/>
-        </Theme>
+          <Theme>
+            {children}
+            <ThemePanel />
+          </Theme>
       </body>
     </html>
   );
