@@ -1,11 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
-import { Image } from '@/sequelize';
+import { Text } from '@/sequelize';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
-const createImageSchema = z.object({
-  type: z.string(),
+const createTextSchema = z.object({
   content: z.string(),
 });
 
@@ -18,7 +17,7 @@ async function handleGet(request: NextApiRequest, response: NextApiResponse) {
   }
 
   try {
-    const stories = await Image.findAll({
+    const stories = await Text.findAll({
       where: {
         user_email: session.user?.email
       }
@@ -38,13 +37,12 @@ async function handlePost(request: NextApiRequest, response: NextApiResponse) {
   }
 
   try {
-    const parsedData = createImageSchema.parse(request.body);
-    const image = await Image.create({
-      type: parsedData.type,
+    const parsedData = createTextSchema.parse(request.body);
+    const text = await Text.create({
       content: parsedData.content,
       user_email: session.user?.email
     });
-    response.status(201).json(image);
+    response.status(201).json(text);
   } catch (error) {
     if (error instanceof z.ZodError) {
       response.status(400).json({ error: error.errors });
