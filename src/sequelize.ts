@@ -23,6 +23,48 @@ const Story = sequelize.define('Story', {
   }
 });
 
+const Image = sequelize.define('Image', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  type: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  user_email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+});
+
+const StoryImage = sequelize.define('StoryImage', {
+  story_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  image_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  x: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  y: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
+});
+
+Story.belongsToMany(Image, { through: StoryImage });
+Image.belongsToMany(Story, { through: StoryImage });
+
 await sequelize.sync();
 
-export { sequelize, Story };
+export { sequelize, Story, Image, StoryImage };
