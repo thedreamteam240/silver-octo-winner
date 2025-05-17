@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { ChevronLeftIcon, ChevronRightIcon, GearIcon } from "@radix-ui/react-icons";
 import { IconButton, Theme } from "@radix-ui/themes";
 
 import { EditorPanel } from "@/types";
@@ -21,7 +21,7 @@ export default function LeftSideMenu({editor} : {editor: EditorPanel}) {
             {isOpen ? (
               <ChevronRightIcon width="22" height="22" />
             ) : (
-              <ChevronLeftIcon width="22" height="22" />
+              <GearIcon width="22" height="22" color="#395bc8" />
             )}
           </IconButton>
           <div>
