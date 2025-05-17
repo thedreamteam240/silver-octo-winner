@@ -5,6 +5,7 @@ import { useState } from "react";
 import { IconButton, Heading, Avatar, Flex, Theme, DropdownMenu, Button } from "@radix-ui/themes";
 
 import { CopyIcon, HamburgerMenuIcon, Link1Icon, Pencil1Icon, RocketIcon, TrashIcon, UploadIcon } from "@radix-ui/react-icons";
+import HeadTitle from "./HeadTitle";
 
 interface IAvatar {
   name: string;
@@ -42,48 +43,7 @@ export default function HeadNav() {
           </IconButton>
         </span>
         <span>
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger>
-              <Button variant="ghost">
-                <Heading size="2" color="gray">
-                  {title}
-                </Heading>
-                <DropdownMenu.TriggerIcon />
-              </Button>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content>
-              <DropdownMenu.Item color="indigo">
-                <Pencil1Icon width="16" height="16" />
-                Rename
-              </DropdownMenu.Item>
-              <DropdownMenu.Item color="cyan">
-                <CopyIcon width="16" height="16" />
-                Duplicate
-              </DropdownMenu.Item>
-              <DropdownMenu.Item color="red">
-                <TrashIcon width="16" height="16" />
-                Delete
-              </DropdownMenu.Item>
-              <DropdownMenu.Separator />
-              <DropdownMenu.Sub>
-                <DropdownMenu.SubTrigger>Share</DropdownMenu.SubTrigger>
-                <DropdownMenu.SubContent>
-                  <DropdownMenu.Item color="green">
-                    <Link1Icon width="16" height="16" />
-                    Link
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item color="blue">
-                    <UploadIcon width="16" height="16" />
-                    Export
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item color="orange">
-                    <RocketIcon width="16" height="16" />
-                    Deploy
-                  </DropdownMenu.Item>
-                </DropdownMenu.SubContent>
-              </DropdownMenu.Sub>
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
+            <HeadTitle title={title} />
         </span>
         <span>
           <IconButton variant="ghost" size="4">
