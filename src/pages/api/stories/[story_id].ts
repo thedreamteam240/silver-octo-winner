@@ -68,7 +68,7 @@ async function handleDelete(request: NextApiRequest, response: NextApiResponse) 
     await story.destroy();
     response.status(200).json({ message: 'Story deleted successfully' });
   } catch (error) {
-    response.status(500).json({ error: error || 'Internal Server Error' });
+    response.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
   }
 }
 
