@@ -173,11 +173,32 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
     fetchStory();
   }, [story_id]);
 
+  useEffect(() => {
+    const preloadContent = async () => {
+      if (!story) return;
+      const contentData: Record<string, any> = {};
+
+      for (const item of story.content) {
+        if (item.type === 'image') {
+          const response = await api.get<Image>(`/images/${item.data.imageId}`);
+          contentData[item.data.imageId] = response.data;
+        } else if (item.type === 'video') {
+          const response = await api.get<Video>(`/videos/${item.data.videoId}`);
+          contentData[item.data.videoId] = response.data;
+        }
+      }
+
+      setPreloadedContent(contentData);
+    };
+
+    preloadContent();
+  }, [story]);
+
   if (loading) return <Loading />;
   if (error) return <Error />;
   if (!story) return null;
 
-  const renderContentItem = async (item: ContentItem) => {
+  const renderContentItem = (item: ContentItem) => {
     const style = {
       position: 'absolute' as const,
       left: `${item.position.x}px`,
