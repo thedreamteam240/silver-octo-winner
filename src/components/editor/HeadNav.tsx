@@ -35,7 +35,7 @@ export default function HeadNav({darkMode, setDarkMode}: {darkMode: boolean, set
       width="80%"
       top="0"
       left="50%"
-      className={`shadow rounded-b-4xl translate-x-[-50%] ` + (darkMode ? "bg-[#18191b]" : "")}
+      className={`shadow rounded-b-4xl translate-x-[-50%] ` + (darkMode ? "shadow-[#395BC8]" : "")}
     >
       <span>
         <IconButton variant="ghost" size="4">
