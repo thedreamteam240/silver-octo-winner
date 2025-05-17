@@ -1,4 +1,4 @@
-import { AlertDialog, Button, Text, TextField, Theme } from "@radix-ui/themes";
+import { AlertDialog, Button, Text, TextField, Theme, Tooltip } from "@radix-ui/themes";
 import { IconButton } from "@radix-ui/themes";
 
 import { ImageIcon, MagnifyingGlassIcon, UploadIcon } from "@radix-ui/react-icons";
@@ -8,16 +8,16 @@ export default function PicturesPicker() {
       <Theme radius="large">
         <AlertDialog.Root>
           <AlertDialog.Trigger>
-            <IconButton variant="ghost" size="4">
-              <ImageIcon width="22" height="22" />
-            </IconButton>
+            <Tooltip content="Import Pictures">
+              <IconButton variant="ghost" size="4">
+                <ImageIcon width="22" height="22" />
+              </IconButton>
+            </Tooltip>
           </AlertDialog.Trigger>
           <AlertDialog.Content>
             <AlertDialog.Title className="flex items-center space-x-4">
-                <ImageIcon width="22" height="22" />
-                <span className="text-lg font-semibold">
-                    Import Pictures
-                </span>
+              <ImageIcon width="22" height="22" />
+              <span className="text-lg font-semibold">Import Pictures</span>
             </AlertDialog.Title>
             <AlertDialog.Description>
               You can import pictures from your local device or from the web.
@@ -33,7 +33,7 @@ export default function PicturesPicker() {
               </Text>
               <span className="border-2 border-dashed border-blue-500 w-fit h-fit rounded-2xl m-auto">
                 <Button size="2" variant="soft" color="blue">
-                    <UploadIcon width="22" height="22" />
+                  <UploadIcon width="22" height="22" />
                   Import from your device
                 </Button>
               </span>
