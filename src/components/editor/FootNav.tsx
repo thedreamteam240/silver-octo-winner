@@ -12,6 +12,8 @@ import {
   TextIcon,
   VideoIcon,
 } from "@radix-ui/react-icons";
+import PicturesPicker from "./PicturesPicker";
+import VideosPicker from "./VideosPicker";
 
 export default function FootNav() {
   const [isMoving, setIsMoving] = useState<boolean>(false);
@@ -74,16 +76,12 @@ export default function FootNav() {
         )}
         {!isMoving && !isIntemplates && (
           <span>
-            <IconButton variant="ghost" size="4">
-              <ImageIcon width="22" height="22" />
-            </IconButton>
+            <PicturesPicker />
           </span>
         )}
         {!isMoving && !isIntemplates && (
           <span>
-            <IconButton variant="ghost" size="4">
-              <VideoIcon width="22" height="22" />
-            </IconButton>
+            <VideosPicker />
           </span>
         )}
         {!isMoving && !isIntemplates && (
