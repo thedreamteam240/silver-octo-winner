@@ -7,6 +7,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 const createStorySchema = z.object({
   title: z.string(),
   description: z.string(),
+  content: z.string(),
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {
@@ -42,7 +43,8 @@ async function handlePost(request: NextApiRequest, response: NextApiResponse) {
     const story = await Story.create({
       title: parsedData.title,
       description: parsedData.description,
-      user_email: session.user?.email
+      user_email: session.user?.email,
+      content: parsedData.content
     });
     response.status(201).json(story);
   } catch (error) {

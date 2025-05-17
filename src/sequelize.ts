@@ -13,6 +13,10 @@ const Story = sequelize.define('Story', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false
@@ -43,44 +47,14 @@ const Image = sequelize.define('Image', {
   }
 });
 
-const StoryImage = sequelize.define('StoryImage', {
-  story_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Story,
-      key: 'id'
-    }
-  },
-  image_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Image,
-      key: 'id'
-    }
-  },
-  x: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  y: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
-
-Story.belongsToMany(Image, { through: StoryImage });
-Image.belongsToMany(Story, { through: StoryImage });
-
-const Text = sequelize.define('Text', {
+const Video = sequelize.define('Video', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  content: {
-    type: DataTypes.TEXT,
+  url: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   user_email: {
@@ -89,36 +63,6 @@ const Text = sequelize.define('Text', {
   }
 });
 
-const StoryText = sequelize.define('StoryText', {
-  story_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Story,
-      key: 'id'
-    }
-  },
-  text_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Text,
-      key: 'id'
-    }
-  },
-  x: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  y: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
-
-Story.belongsToMany(Text, { through: StoryText });
-Text.belongsToMany(Story, { through: StoryText });
-
 await sequelize.sync();
 
-export { sequelize, Story, Image, StoryImage, Text, StoryText };
+export { sequelize, Story, Image, Video };
