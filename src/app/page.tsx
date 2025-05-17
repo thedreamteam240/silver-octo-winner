@@ -18,6 +18,7 @@ function PageContent() {
 }
 
 export default function Page() {
+
   return (
     <SessionProvider>
       <PageContent />
