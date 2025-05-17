@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 
-import { IconButton, Heading, Avatar, Flex, Theme, DropdownMenu, Button } from "@radix-ui/themes";
+import { IconButton, Avatar, Flex, Theme } from "@radix-ui/themes";
 
-import { CopyIcon, HamburgerMenuIcon, Link1Icon, Pencil1Icon, RocketIcon, TrashIcon, UploadIcon } from "@radix-ui/react-icons";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import HeadTitle from "./HeadTitle";
+import AvatarDropMenu from "./AvatarDropMenu";
 
 interface IAvatar {
   name: string;
@@ -46,27 +47,9 @@ export default function HeadNav() {
             <HeadTitle title={title} />
         </span>
         <span>
-          <IconButton variant="ghost" size="4">
-            <Avatar
-              src={avatar.image}
-              fallback={_avatarFallback(avatar.name)}
-              size="3"
-            />
-          </IconButton>
+          <AvatarDropMenu avatar={avatar} />
         </span>
       </Flex>
     </Theme>
   );
-}
-
-//////////////////////
-// Private funtions //
-//////////////////////
-
-function _avatarFallback(name: string) {
-  const initials = name
-    .split(" ")
-    .map((word) => word.charAt(0))
-    .join("");
-  return initials;
 }
