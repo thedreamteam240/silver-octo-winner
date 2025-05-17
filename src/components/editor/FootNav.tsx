@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { IconButton, Flex, Theme, Tooltip } from "@radix-ui/themes";
+import { IconButton, Flex, Tooltip, DropdownMenu } from "@radix-ui/themes";
 import {
+  CircleIcon,
   DividerVerticalIcon,
   ExitIcon,
   MoveIcon,
+  SquareIcon,
   StackIcon,
   TableIcon,
   TextIcon,
+  VercelLogoIcon,
 } from "@radix-ui/react-icons";
 import PicturesPicker from "./PicturesPicker";
 import VideosPicker from "./VideosPicker";
@@ -40,9 +43,11 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
       width="fit-content"
       bottom="0"
       left="50%"
-      className={`shadow rounded-4xl translate-x-[-50%] footnav-transition${
-        animating ? " footnav-animating" : ""
-      } ` + (darkMode ? "shadow-[#395BC8]" : "")}
+      className={
+        `shadow rounded-4xl translate-x-[-50%] footnav-transition${
+          animating ? " footnav-animating" : ""
+        } ` + (darkMode ? "shadow-[#395BC8]" : "")
+      }
       style={{ transition: "opacity 0.5s, transform 0.5s" }}
     >
       {!isIntemplates && (
@@ -62,11 +67,26 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
         <DividerVerticalIcon width="22" height="22" />
       )}
       {!isMoving && !isIntemplates && (
-        <Tooltip content="Add shapes">
-          <IconButton variant="ghost" size="4">
-            <StackIcon width="22" height="22" />
-          </IconButton>
-        </Tooltip>
+        <DropdownMenu.Root>
+          <Tooltip content="Add shapes">
+            <DropdownMenu.Trigger>
+              <IconButton variant="ghost" size="4">
+                <StackIcon width="22" height="22" />
+              </IconButton>
+            </DropdownMenu.Trigger>
+          </Tooltip>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item>
+              <SquareIcon width="22" height="22" />
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <CircleIcon width="22" height="22" />
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <VercelLogoIcon width="22" height="22" />
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       )}
       {!isMoving && !isIntemplates && (
         <Tooltip content="Add text">
@@ -112,15 +132,15 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
           </IconButton>
         </Tooltip>
       )}
-    <style jsx global>{`
-      .footnav-transition {
-        opacity: 1;
-      }
-      .footnav-animating {
-        opacity: 0.5;
-        transform: scale(1.2);
-      }
-    `}</style>
+      <style jsx global>{`
+        .footnav-transition {
+          opacity: 1;
+        }
+        .footnav-animating {
+          opacity: 0.5;
+          transform: scale(1.2);
+        }
+      `}</style>
     </Flex>
   );
 }
