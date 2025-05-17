@@ -10,6 +10,7 @@ interface Story {
   id: number;
   title: string;
   description: string;
+  tone: string;
 }
 
 type StoryCardProps = {
@@ -21,10 +22,44 @@ type StoryCardProps = {
 
 function StoryCard({ id, title, description, onStoryClick }: StoryCardProps) {
   return (
-    <Box className="otot" maxWidth="500px" top="1">
-      <Card size="3">
-        <Text as="p" size="3"><Strong>{title}</Strong> {description}</Text>
-        <Button onClick={() => onStoryClick(id)}>View</Button>
+    <Box className="story-card-container" style={{ transition: 'transform 0.2s ease-in-out' }}>
+      <Card 
+        size="3" 
+        style={{
+          background: 'var(--gray-1)',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          borderRadius: '12px',
+          padding: '1.5rem',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          transition: 'all 0.3s ease',
+          cursor: 'pointer',
+        }}
+        onClick={() => onStoryClick(id)}
+        className="hover:transform hover:-translate-y-1 hover:shadow-lg"
+      >
+        <Box>
+          <Text as="div" size="5" weight="bold" style={{ marginBottom: '0.75rem' }}>
+            {title}
+          </Text>
+          <Text as="p" size="3" style={{ lineHeight: '1.6' }}>
+            {description}
+          </Text>
+        </Box>
+        <Button 
+          size="3" 
+          style={{ 
+            marginTop: '1.5rem',
+            padding: '0.75rem 1.5rem',
+            borderRadius: '8px',
+            transition: 'all 0.2s ease',
+          }}
+          className="hover:scale-102 hover:shadow-md"
+        >
+          Read Story
+        </Button>
       </Card>
     </Box>
   );
@@ -53,6 +88,7 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
 
     fetchStories();
   }, []);
+
   if (loading) {
     return <Loading />;
   }
@@ -62,10 +98,26 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
   }
 
   return (
-    <Grid columns="3" gap="6" rows="repeat(2, 500px)" width="auto">
-      {stories.map((story) => (
-        <StoryCard id={story.id} title={story.title} description={story.description} key={story.title} onStoryClick={onStoryClick} />
-      ))}
-    </Grid>
-  )
+    <Box style={{ padding: '2rem' }}>
+      <Grid 
+        columns={{ initial: "1", sm: "2", md: "3" }} 
+        gap="6" 
+        style={{ 
+          maxWidth: '1400px', 
+          margin: '0 auto',
+          gridAutoRows: 'minmax(300px, auto)'
+        }}
+      >
+        {stories.map((story) => (
+          <StoryCard 
+            id={story.id} 
+            title={story.title} 
+            description={story.description} 
+            key={story.id} 
+            onStoryClick={onStoryClick} 
+          />
+        ))}
+      </Grid>
+    </Box>
+  );
 }

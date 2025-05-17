@@ -7,6 +7,7 @@ import { authOptions } from '../auth/[...nextauth]';
 const updateStorySchema = z.object({
   title: z.string(),
   description: z.string(),
+  tone: z.string().optional(),
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {

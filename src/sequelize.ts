@@ -9,6 +9,12 @@ const Story = sequelize.define('Story', {
   },
   title: DataTypes.STRING,
   description: DataTypes.STRING,
+  tone: {
+    type: DataTypes.STRING,
+    defaultValue: 'Dramatic',
+    allowNull: false,
+    values: ['Dramatic', 'Ironic', 'Super Cringe', 'Classy', 'Touching', 'Absurd', 'Passive-Aggressive', 'Honest', 'Dark']
+  },
   user_email: {
     type: DataTypes.STRING,
     allowNull: false
@@ -91,7 +97,8 @@ await Story.create({
       position: { x: 200, y: 200, z: 1 },
       data: { imageId: "1", alt: "Beautiful landscape" }
     }
-  ])
+  ]),
+  tone: 'Ironic'
 });
 
 await Story.create({
@@ -105,7 +112,8 @@ await Story.create({
       position: { x: 300, y: 300, z: 1 },
       data: { videoId: "1", autoplay: false, controls: true }
     }
-  ])
+  ]),
+  tone: 'Super Cringe'
 });
 
 await Story.create({
@@ -119,7 +127,8 @@ await Story.create({
       position: { x: 400, y: 400, z: 1 },
       data: { url: "https://example.com", title: "Example Embed" }
     }
-  ])
+  ]),
+  tone: 'Classy'
 });
 
 await Story.create({
@@ -139,7 +148,8 @@ await Story.create({
       position: { x: 200, y: 200, z: 2 },
       data: { imageId: "2", alt: "Supporting image" }
     }
-  ])
+  ]),
+  tone: 'Touching'
 });
 
 await Story.create({
@@ -165,7 +175,8 @@ await Story.create({
       position: { x: 300, y: 300, z: 3 },
       data: { url: "https://example.com/embed", title: "Related content" }
     }
-  ])
+  ]),
+  tone: 'Absurd'
 });
 
 export { sequelize, Story, Image, Video };

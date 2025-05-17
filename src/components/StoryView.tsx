@@ -40,12 +40,104 @@ interface Story {
   content: string;
   createdAt: string;
   updatedAt: string;
+  tone: string;
 }
 
 type StoryViewProps = {
   story_id: number;
   setStoryID: (storyID: number | null) => void;
 }
+
+type AccentColor = 'tomato' | 'red' | 'crimson' | 'pink' | 'plum' | 'purple' | 'violet' | 'indigo' | 'blue' | 'cyan' | 'teal' | 'green' | 'grass' | 'brown' | 'orange' | 'sky' | 'mint' | 'lime' | 'yellow' | 'amber' | 'gold' | 'bronze' | 'gray';
+type GrayColor = 'gray' | 'mauve' | 'slate' | 'sage' | 'olive' | 'sand';
+type Radius = 'none' | 'small' | 'medium' | 'large' | 'full';
+type Scaling = '90%' | '95%' | '100%' | '105%' | '110%';
+type PanelBackground = 'solid' | 'translucent';
+type Appearance = 'light' | 'dark';
+
+interface ToneTheme {
+  accentColor: AccentColor;
+  grayColor: GrayColor;
+  radius: Radius;
+  scaling: Scaling;
+  panelBackground: PanelBackground;
+  appearance: Appearance;
+}
+
+const toneThemes: Record<string, ToneTheme> = {
+  'Dramatic': {
+    accentColor: 'crimson',
+    grayColor: 'slate',
+    radius: 'none',
+    scaling: '110%',
+    panelBackground: 'solid',
+    appearance: 'dark'
+  },
+  'Ironic': {
+    accentColor: 'amber',
+    grayColor: 'sand',
+    radius: 'full',
+    scaling: '95%',
+    panelBackground: 'translucent',
+    appearance: 'light'
+  },
+  'Super Cringe': {
+    accentColor: 'pink',
+    grayColor: 'mauve',
+    radius: 'large',
+    scaling: '110%',
+    panelBackground: 'translucent',
+    appearance: 'light'
+  },
+  'Classy': {
+    accentColor: 'gold',
+    grayColor: 'sage',
+    radius: 'small',
+    scaling: '100%',
+    panelBackground: 'solid',
+    appearance: 'light'
+  },
+  'Touching': {
+    accentColor: 'sky',
+    grayColor: 'slate',
+    radius: 'medium',
+    scaling: '105%',
+    panelBackground: 'solid',
+    appearance: 'light'
+  },
+  'Absurd': {
+    accentColor: 'purple',
+    grayColor: 'mauve',
+    radius: 'full',
+    scaling: '110%',
+    panelBackground: 'translucent',
+    appearance: 'dark'
+  },
+  'Passive-Aggressive': {
+    accentColor: 'red',
+    grayColor: 'slate',
+    radius: 'none',
+    scaling: '90%',
+    panelBackground: 'solid',
+    appearance: 'dark'
+  },
+  'Honest': {
+    accentColor: 'green',
+    grayColor: 'sage',
+    radius: 'medium',
+    scaling: '100%',
+    panelBackground: 'solid',
+    appearance: 'light'
+  },
+  'Dark': {
+    accentColor: 'gray',
+    grayColor: 'gray',
+    radius: 'none',
+    scaling: '100%',
+    panelBackground: 'solid',
+    appearance: 'dark'
+  }
+};
 
 export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
   const [story, setStory] = useState<Story | null>(null);
@@ -128,14 +220,13 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
   };
 
   return (
-    <Theme>
+    <Theme appearance={toneThemes[story.tone].appearance}>
       <Box style={{ 
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'var(--gray-1)',
         overflow: 'hidden'
       }}>
         {/* Story Content Canvas */}
@@ -154,14 +245,11 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
           top: '2rem',
           left: '2rem',
           maxWidth: '400px',
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(10px)',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           zIndex: 1000
         }}>
           <Flex direction="column" gap="3" p="4">
             <Heading size="6">{story.title}</Heading>
-            <Text size="3" color="gray">{story.description}</Text>
+            <Text size="3">{story.description}</Text>
             <Button onClick={() => setStoryID(null)}>Back</Button>
           </Flex>
         </Card>
@@ -171,16 +259,13 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
           position: 'fixed',
           bottom: '2rem',
           right: '2rem',
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(10px)',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           zIndex: 1000
         }}>
           <Flex direction="column" gap="2" p="3">
-            <Text size="2" color="gray">
+            <Text size="2">
               Created: {new Date(story.createdAt).toLocaleDateString()}
             </Text>
-            <Text size="2" color="gray">
+            <Text size="2">
               Updated: {new Date(story.updatedAt).toLocaleDateString()}
             </Text>
           </Flex>
