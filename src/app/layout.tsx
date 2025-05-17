@@ -18,7 +18,7 @@ export default function RootLayout({
       <body>
         <Theme>
           {children}
-          <ThemePanel/>
+          {/* <ThemePanel/> */}
         </Theme>
       </body>
     </html>
