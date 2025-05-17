@@ -2,9 +2,8 @@ import { Button, DropdownMenu, Text } from "@radix-ui/themes";
 
 import { Editor } from "@/types";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function FontStyleEditor({ name, value, onChange }: { name: string, value: string, onChange: (value: string) => void }): Editor {
-
-  onChange("Sans");
   return (
     <span>
       <Text>{name}</Text>
