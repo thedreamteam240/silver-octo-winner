@@ -41,7 +41,7 @@ async function handlePut(request: NextApiRequest, response: NextApiResponse) {
     }
 
     const parsedData = updateStorySchema.parse(request.body);
-    await story.update({ title: parsedData.title, description: parsedData.description, updatedAt: new Date() });
+    await story.update({ title: parsedData.title, description: parsedData.description });
     response.status(200).json(story);
   } catch (error) {
     if (error instanceof z.ZodError) {
