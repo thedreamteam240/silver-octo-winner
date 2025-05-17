@@ -156,6 +156,7 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
   const [story, setStory] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [preloadedContent, setPreloadedContent] = useState<Record<string, Image | Video>>({});
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -176,13 +177,14 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
   useEffect(() => {
     const preloadContent = async () => {
       if (!story) return;
-      const contentData: Record<string, any> = {};
+      const contentData: Record<string, Image | Video> = {};
+      const parsedContent = JSON.parse(story.content) as ContentItem[];
 
-      for (const item of story.content) {
-        if (item.type === 'image') {
+      for (const item of parsedContent) {
+        if (item.type === 'image' && item.data.imageId) {
           const response = await api.get<Image>(`/images/${item.data.imageId}`);
           contentData[item.data.imageId] = response.data;
-        } else if (item.type === 'video') {
+        } else if (item.type === 'video' && item.data.videoId) {
           const response = await api.get<Video>(`/videos/${item.data.videoId}`);
           contentData[item.data.videoId] = response.data;
         }
@@ -221,31 +223,24 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
           </Text>
         );
       case 'image':
-        const image = await api.get<Image>(`/images/${item.data.imageId}`);
-        if (!image.data) {
-          console.error('Image not found');
-          return null;
-        }
-
-        return (
+       return (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             key={item.uid}
-            src={`data:image/${image.data.type};base64,${image.data.content}`}
+            src={item.data.imageId && preloadedContent[item.data.imageId] && 'type' in preloadedContent[item.data.imageId] && 'content' in preloadedContent[item.data.imageId] ? 
+              `data:image/${(preloadedContent[item.data.imageId] as Image).type};base64,${(preloadedContent[item.data.imageId] as Image).content}`
+              : ''}
             alt={item.data.alt}
             style={style}
           />
         );
       case 'video':
-        const video = await api.get<Video>(`/videos/${item.data.videoId}`);
-        if (!video.data) {
-          console.error('Video not found');
-          return null;
-        }
-
         return (
           <video
             key={item.uid}
-            src={video.data.url}
+            src={item.data.videoId && preloadedContent[item.data.videoId] && 'url' in preloadedContent[item.data.videoId] ? 
+              (preloadedContent[item.data.videoId] as Video).url 
+              : ''}
             autoPlay={item.data.autoplay}
             controls={item.data.controls}
             style={style}
