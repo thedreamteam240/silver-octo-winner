@@ -1,10 +1,10 @@
 import { Button, DropdownMenu, Text } from "@radix-ui/themes";
 
-import { Editor } from "@/types";
+import { Editor, EditorFont } from "@/types";
 
-export default function FontStyleEditor({name, value, onChange} : {name: string, value: string, onChange: (value: string) => void}) : Editor {
+export default function FontStyleEditor({name, value, onChange} : {name: string, value: EditorFont, onChange: (value: string) => void}) : Editor {
     return (
-      <span>
+      <span className="flex flex-row justify-between items-center">
         <Text>{name}</Text>
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
@@ -17,9 +17,13 @@ export default function FontStyleEditor({name, value, onChange} : {name: string,
                     <p className="font-sans">
                         Sans
                     </p>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item>
                     <p className="font-serif">
                         Serif
                     </p>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item>
                     <p className="font-mono">
                         Mono
                     </p>

@@ -6,6 +6,7 @@ import FootNav from "@/components/editor/FootNav";
 import HeadNav from "@/components/editor/HeadNav";
 import { Theme } from "@radix-ui/themes";
 import LeftSideMenu from "@/components/editor/LeftSideMenu";
+import TextEditorPanel from "@/components/editor/editors/TextEditorPanel";
 
 export default function Test(){
     const [darkMode, setDarkMode] = useState<boolean>(false);
@@ -14,7 +15,11 @@ export default function Test(){
         <div className={`flex flex-col w-[100%] h-[100%] gap-2 ` + (darkMode ? "bg-[#18191b]" : "")}>
           <HeadNav darkMode={darkMode} setDarkMode={setDarkMode} />
           <FootNav darkMode={darkMode} />
-          <LeftSideMenu />
+          <LeftSideMenu editor={<TextEditorPanel props={{
+            color: "#000000",
+            size: 12,
+            style: "mono",
+          }} />} />
             <span className="flex flex-col items-center justify-center w-full h-full">
                 <br />
             </span>

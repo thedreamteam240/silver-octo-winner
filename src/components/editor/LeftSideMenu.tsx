@@ -3,8 +3,9 @@ import React, { ReactNode, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { IconButton, Theme } from "@radix-ui/themes";
 
+import { EditorPanel } from "@/types";
 
-export default function LeftSideMenu({editor} : {editor: ReactNode}) {
+export default function LeftSideMenu({editor} : {editor: EditorPanel}) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (

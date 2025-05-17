@@ -4,7 +4,7 @@ import { Editor } from "@/types";
 
 export default function ColorEditor({name, value, onChange} : {name: string, value: string, onChange: (value: string) => void}) : Editor {
     return (
-      <span>
+      <span className="flex flex-row justify-between items-center">
         <Text>{name}</Text>
         <input
           type="color"
