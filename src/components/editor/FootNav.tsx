@@ -12,6 +12,8 @@ import {
 } from "@radix-ui/react-icons";
 import PicturesPicker from "./PicturesPicker";
 import VideosPicker from "./VideosPicker";
+import { addChildren } from "./Preview";
+import TextComponent from "./components/Text/Text";
 
 export default function FootNav({darkMode}: {darkMode: boolean}) {
   const [isMoving, setIsMoving] = useState<boolean>(false);
@@ -36,13 +38,13 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
       m="4"
       mb="9"
       p="4"
-      position="absolute"
+      position="fixed"
       width="fit-content"
       bottom="0"
       left="50%"
-      className={`shadow rounded-4xl translate-x-[-50%] footnav-transition${
+      className={`shadow rounded-4xl z-20 translate-x-[-50%] footnav-transition${
         animating ? " footnav-animating" : ""
-      } ` + (darkMode ? "shadow-[#395BC8]" : "")}
+      } ` + (darkMode ? "shadow-[#395BC8] bg-[#18191b]" : "bg-white")}
       style={{ transition: "opacity 0.5s, transform 0.5s" }}
     >
       {!isIntemplates && (
@@ -70,7 +72,10 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
       )}
       {!isMoving && !isIntemplates && (
         <Tooltip content="Add text">
-          <IconButton variant="ghost" size="4">
+          <IconButton variant="ghost" size="4" onClick={() => {
+            const textId = crypto.randomUUID();
+            addChildren(<TextComponent id={textId} key={textId} content="Hello World" />)
+          }}>
             <TextIcon width="22" height="22" />
           </IconButton>
         </Tooltip>
