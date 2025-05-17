@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { IconButton, Avatar, Flex, Theme } from "@radix-ui/themes";
+import { IconButton, Flex } from "@radix-ui/themes";
 
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import HeadTitle from "./HeadTitle";
@@ -14,8 +14,8 @@ interface IAvatar {
 }
 
 export default function HeadNav({darkMode, setDarkMode}: {darkMode: boolean, setDarkMode: (darkMode: boolean) => void}) {
-  const [title, setTitle] = useState<string>("Untitled");
-  const [avatar, setAvatar] = useState<IAvatar>({
+  const [title, ] = useState<string>("Untitled");
+  const [avatar, ] = useState<IAvatar>({
     name: "John Doe",
     image: "https://example.com/avatar.jpg",
   });

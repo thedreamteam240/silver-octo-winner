@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { IconButton, Flex, Theme, Tooltip } from "@radix-ui/themes";
+import { IconButton, Flex, Tooltip } from "@radix-ui/themes";
 import {
   DividerVerticalIcon,
   ExitIcon,
