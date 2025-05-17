@@ -83,6 +83,10 @@ const Text = sequelize.define('Text', {
     type: DataTypes.TEXT,
     allowNull: false
   },
+  user_email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
 });
 
 const StoryText = sequelize.define('StoryText', {
