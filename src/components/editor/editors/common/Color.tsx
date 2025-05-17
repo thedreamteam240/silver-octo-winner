@@ -10,7 +10,7 @@ export default function ColorEditor({name, value, onChange} : {name: string, val
           type="color"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-10 h-10 border-none rounded-full cursor-pointer"
+          className="rounded-full cursor-pointer"
         />
       </span>
     );

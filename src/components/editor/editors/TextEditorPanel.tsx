@@ -1,10 +1,13 @@
+import { useState } from "react";
+
 import AEditorPanel from "./AEditorPanel";
 
-import FontStyleEditor from "./common/FontStyle";
+import FontFamillyEditor from "./common/FontFamilly";
 import FontSizeEditor from "./common/FontSize";
 import ColorEditor from "./common/Color";
 
 import { EditorFont } from "@/types";
+import Toggle from "./common/Toggle";
 
 interface TextEditorPanelProps {
     style: EditorFont;
@@ -13,15 +16,23 @@ interface TextEditorPanelProps {
 }
 
 export default function TextEditorPanel({props} : {props: TextEditorPanelProps}) {
+    const [style, setStyle] = useState<EditorFont>(props.style);
+    const [size, setSize] = useState<number>(props.size);
+    const [color, setColor] = useState<string>(props.color);
+    const [isBold, setIsBold] = useState<boolean>(false);
+    const [isItalic, setIsItalic] = useState<boolean>(false);
+
     return (
         <AEditorPanel
             sections={[
                 {
                     name: "Text",
                     editors: [
-                        <FontStyleEditor name="Style" onChange={() => null} value={props.style} />,
-                        <FontSizeEditor name="Size" value={props.size} onChange={(value: string) => null} />,
-                        <ColorEditor name="Color" value={props.color} onChange={(value: string) => null} />,
+                        <FontFamillyEditor name="Style" onChange={(value: EditorFont) => setStyle(value)} value={style} />,
+                        <FontSizeEditor name="Size" value={size} onChange={(value: number) => setSize(value)} />,
+                        <ColorEditor name="Color" value={color} onChange={(value: string) => setColor(value)} />,
+                        <Toggle name="Bold" value={isBold} onChange={(value: boolean) => setIsBold(value)} />,
+                        <Toggle name="Italic" value={isItalic} onChange={(value: boolean) => setIsItalic(value)} />,
                     ],
                 },
             ]}
