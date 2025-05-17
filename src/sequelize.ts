@@ -9,8 +9,14 @@ const Story = sequelize.define('Story', {
   },
   name: DataTypes.STRING,
   description: DataTypes.STRING,
-  createdAt: DataTypes.DATE,
-  updatedAt: DataTypes.DATE,
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  }
 });
 
 await sequelize.sync();

@@ -1,52 +1,51 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { z } from 'zod'
-import { Story } from '@/sequelize'
-
-
-function handleGet(request: NextApiRequest, response: NextApiResponse) {
-  Story.findAll().then((stories) => {
-    response.status(200).json(stories)
-  }).catch((error) => {
-    response.status(500).json({ error: error })
-  }).finally(() => {
-    response.end()
-  })
-}
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { z } from 'zod';
+import { Story } from '@/sequelize';
 
 const createStorySchema = z.object({
   title: z.string(),
   description: z.string(),
-})
+});
 
-function handlePost(request: NextApiRequest, response: NextApiResponse) {
-  let parsedData: z.infer<typeof createStorySchema>
+async function handleGet(request: NextApiRequest, response: NextApiResponse) {
   try {
-    parsedData = createStorySchema.parse(request.body)
+    const stories = await Story.findAll();
+    response.status(200).json(stories);
   } catch (error) {
-    response.status(400).json({ error: error })
-    return
+    response.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
   }
-
-  Story.create({
-    title: parsedData.title,
-    description: parsedData.description
-  }).then((story) => {
-    response.status(200).json(story)
-  }).catch((error) => {
-    response.status(500).json({ error: error })
-  }).finally(() => {
-    response.end()
-  })
 }
 
-export default function handler(
+async function handlePost(request: NextApiRequest, response: NextApiResponse) {
+  try {
+    const parsedData = createStorySchema.parse(request.body);
+    const story = await Story.create({
+      title: parsedData.title,
+      description: parsedData.description,
+    });
+    response.status(201).json(story);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      response.status(400).json({ error: error.errors });
+    } else {
+      response.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
+    }
+  }
+}
+
+export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
   switch (request.method) {
     case 'GET':
-      return handleGet(request, response);
+      await handleGet(request, response);
+      break;
     case 'POST':
-      return handlePost(request, response);
+      await handlePost(request, response);
+      break;
+    default:
+      response.setHeader('Allow', ['GET', 'POST']);
+      response.status(405).json({ error: `Method ${request.method} not allowed` });
   }
 }
