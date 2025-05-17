@@ -4,6 +4,8 @@ import LogoutButton from "@/components/LogoutButton";
 import { Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
+import Loading from "@/components/Loading";
+import Error from "@/components/Error";
 
 interface Story {
   id: string;
@@ -31,13 +33,14 @@ export default function Authenticated() {
 
     fetchStories();
   }, []);
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Flex direction="column" gap="2">
       <LogoutButton />
-      <p>Welcome back!</p>
 
-      {loading && <p>Loading stories...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
       {!loading && !error && (
