@@ -9,6 +9,10 @@ const Story = sequelize.define('Story', {
   },
   title: DataTypes.STRING,
   description: DataTypes.STRING,
+  user_email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false

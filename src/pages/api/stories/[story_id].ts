@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 import { Story } from '@/sequelize';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../auth/[...nextauth]';
 
 const updateStorySchema = z.object({
   title: z.string(),
@@ -8,6 +10,43 @@ const updateStorySchema = z.object({
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {
+  const session = await getServerSession(request, response, authOptions)
+
+  if (!session) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
+  const story_id = request.query.story_id;
+  if (!story_id) {
+    response.status(400).json({ error: 'story_id is required' });
+    return;
+  }
+
+  try {
+    const story = await Story.findByPk(parseInt(story_id as string))
+    if (!story) {
+      response.status(404).json({ error: 'Story not found' });
+      return;
+    }
+    if (story.getDataValue('user_email') !== session.user?.email) {
+      response.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
+    response.status(200).json(story);
+  } catch (error: unknown) {
+    response.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
+  }
+}
+
+async function handlePut(request: NextApiRequest, response: NextApiResponse) {
+  const session = await getServerSession(request, response, authOptions)
+
+  if (!session) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
   const story_id = request.query.story_id;
   if (!story_id) {
     response.status(400).json({ error: 'story_id is required' });
@@ -20,23 +59,8 @@ async function handleGet(request: NextApiRequest, response: NextApiResponse) {
       response.status(404).json({ error: 'Story not found' });
       return;
     }
-    response.status(200).json(story);
-  } catch (error: unknown) {
-    response.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
-  }
-}
-
-async function handlePut(request: NextApiRequest, response: NextApiResponse) {
-  const story_id = request.query.story_id;
-  if (!story_id) {
-    response.status(400).json({ error: 'story_id is required' });
-    return;
-  }
-
-  try {
-    const story = await Story.findByPk(parseInt(story_id as string));
-    if (!story) {
-      response.status(404).json({ error: 'Story not found' });
+    if (story.getDataValue('user_email') !== session.user?.email) {
+      response.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
@@ -53,6 +77,13 @@ async function handlePut(request: NextApiRequest, response: NextApiResponse) {
 }
 
 async function handleDelete(request: NextApiRequest, response: NextApiResponse) {
+  const session = await getServerSession(request, response, authOptions)
+
+  if (!session) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
   const story_id = request.query.story_id;
   if (!story_id) {
     response.status(400).json({ error: 'story_id is required' });
@@ -63,6 +94,10 @@ async function handleDelete(request: NextApiRequest, response: NextApiResponse) 
     const story = await Story.findByPk(parseInt(story_id as string));
     if (!story) {
       response.status(404).json({ error: 'Story not found' });
+      return;
+    }
+    if (story.getDataValue('user_email') !== session.user?.email) {
+      response.status(401).json({ error: 'Unauthorized' });
       return;
     }
     await story.destroy();
