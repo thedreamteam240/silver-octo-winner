@@ -1,15 +1,26 @@
 'use client';
 
-import AuthButton from "@/components/AuthButton";
-import { Flex } from "@radix-ui/themes";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
+import Authenticated from "@/components/Authenticated";
+import Unauthenticated from "@/components/Unauthenticated";
+import Loading from "@/components/Loading";
+
+function PageContent() {
+  const { status } = useSession();
+
+  return (
+    <>
+      {status === "authenticated" && <Authenticated />}
+      {status === "unauthenticated" && <Unauthenticated />}
+      {status === "loading" && <Loading />}
+    </>
+  );
+}
 
 export default function Page() {
   return (
     <SessionProvider>
-      <Flex direction="column" gap="2">
-        <AuthButton />
-      </Flex>
+      <PageContent />
     </SessionProvider>
   );
 }
