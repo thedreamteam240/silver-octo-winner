@@ -7,7 +7,7 @@ const Story = sequelize.define('Story', {
     autoIncrement: true,
     primaryKey: true,
   },
-  name: DataTypes.STRING,
+  title: DataTypes.STRING,
   description: DataTypes.STRING,
   createdAt: {
     type: DataTypes.DATE,
