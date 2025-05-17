@@ -5,17 +5,15 @@ import { IconButton, Flex, Theme, Tooltip } from "@radix-ui/themes";
 import {
   DividerVerticalIcon,
   ExitIcon,
-  ImageIcon,
   MoveIcon,
   StackIcon,
   TableIcon,
   TextIcon,
-  VideoIcon,
 } from "@radix-ui/react-icons";
 import PicturesPicker from "./PicturesPicker";
 import VideosPicker from "./VideosPicker";
 
-export default function FootNav() {
+export default function FootNav({darkMode}: {darkMode: boolean}) {
   const [isMoving, setIsMoving] = useState<boolean>(false);
   const [isIntemplates, setIsIntemplates] = useState<boolean>(false);
   const [animating, setAnimating] = useState<boolean>(false);
@@ -45,7 +43,7 @@ export default function FootNav() {
         left="50%"
         className={`shadow rounded-4xl translate-x-[-50%] footnav-transition${
           animating ? " footnav-animating" : ""
-        }`}
+        } ` + (darkMode ? "bg-[#18191b]" : "")}
         style={{ transition: "opacity 0.5s, transform 0.5s" }}
       >
         {!isIntemplates && (
