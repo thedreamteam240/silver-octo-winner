@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
-import { Text } from '@/sequelize';
+import { Video } from '@/sequelize';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
-const createTextSchema = z.object({
-  content: z.string(),
+const createVideoSchema = z.object({
+  url: z.string(),
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {
@@ -17,7 +17,7 @@ async function handleGet(request: NextApiRequest, response: NextApiResponse) {
   }
 
   try {
-    const stories = await Text.findAll({
+    const stories = await Video.findAll({
       where: {
         user_email: session.user?.email
       }
@@ -37,12 +37,12 @@ async function handlePost(request: NextApiRequest, response: NextApiResponse) {
   }
 
   try {
-    const parsedData = createTextSchema.parse(request.body);
-    const text = await Text.create({
-      content: parsedData.content,
+    const parsedData = createVideoSchema.parse(request.body);
+    const video = await Video.create({
+      url: parsedData.url,
       user_email: session.user?.email
     });
-    response.status(201).json(text);
+    response.status(201).json(video);
   } catch (error) {
     if (error instanceof z.ZodError) {
       response.status(400).json({ error: error.errors });
