@@ -1,11 +1,16 @@
 'use client';
 
-import { Flex, Spinner } from "@radix-ui/themes";
+import { Flex, Spinner, Text } from "@radix-ui/themes";
 
-export default function Loading() {
+type LoadingProps = {
+  message?: string;
+}
+
+export default function Loading({ message }: LoadingProps) {
   return (
     <Flex direction="column" gap="2" align="center" justify="center" className="h-screen">
       <Spinner />
+      {message && <Text as="p" size="3">{message}</Text>}
     </Flex>
   );
 }

@@ -8,6 +8,7 @@ const createStorySchema = z.object({
   title: z.string(),
   description: z.string(),
   content: z.string(),
+  tone: z.string().default('Dramatic'),
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {

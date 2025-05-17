@@ -4,7 +4,11 @@ import { Button, Flex, Heading, Text, Container, Box, Theme, Card } from "@radix
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-export default function Error() {
+type ErrorProps = {
+  message?: string;
+}
+
+export default function Error({ message }: ErrorProps) {
   const router = useRouter();
 
   return (
@@ -39,6 +43,7 @@ export default function Error() {
             <Flex direction="column" align="center" style={{ maxWidth: '42rem' }}>
               <Text size="4" mb="6">
                 We apologize for the inconvenience. Please try again or return to the home page.
+                {message && <Text as="p" size="3">{message}</Text>}
               </Text>
 
               <Box mb="8">
