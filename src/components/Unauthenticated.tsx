@@ -138,9 +138,9 @@ export default function Unauthenticated() {
               <Box mb="8">
                 <Card>
                   <Text size="3" style={{ fontStyle: 'italic' }}>
-                    "A page you maybe shouldn't open... but you do anyway.
+                    A page you maybe shouldn&apos;t open... but you do anyway.
                     A page you share. A page that hits hard.
-                    Because if it's the end — might as well make it unforgettable."
+                    Because if it&apos;s the end — might as well make it unforgettable.
                   </Text>
                 </Card>
               </Box>

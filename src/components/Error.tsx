@@ -40,11 +40,11 @@ export default function Error() {
               <Text size="4" mb="6">
                 We apologize for the inconvenience. Please try again or return to the home page.
               </Text>
-              
+
               <Box mb="8">
                 <Card>
                   <Text size="3" style={{ fontStyle: 'italic' }}>
-                    "Don't worry, even the best systems have their moments. We're here to help you get back on track."
+                    Don&apos;t worry, even the best systems have their moments. We&apos;re here to help you get back on track.
                   </Text>
                 </Card>
               </Box>

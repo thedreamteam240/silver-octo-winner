@@ -5,7 +5,6 @@ import { Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import Loading from "@/components/Loading";
-import Error from "@/components/Error";
 
 interface Story {
   id: string;
@@ -21,10 +20,9 @@ export default function Authenticated() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        // Use your custom Axios instance here, which injects the session token automatically
         const response = await api.get<Story[]>('/stories');
         setStories(response.data);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch stories');
       } finally {
         setLoading(false);
