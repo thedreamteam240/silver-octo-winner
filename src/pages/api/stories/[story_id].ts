@@ -7,6 +7,7 @@ import { authOptions } from '../auth/[...nextauth]';
 const updateStorySchema = z.object({
   title: z.string(),
   description: z.string(),
+  tone: z.string().optional(),
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {
@@ -66,6 +67,7 @@ async function handlePut(request: NextApiRequest, response: NextApiResponse) {
 
     const parsedData = updateStorySchema.parse(request.body);
     await story.update({ title: parsedData.title, description: parsedData.description });
+    
     response.status(200).json(story);
   } catch (error) {
     if (error instanceof z.ZodError) {
