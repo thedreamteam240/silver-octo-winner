@@ -13,7 +13,7 @@ export function removeChildren(child: ReactNode) {
   childrens = childrens.filter((c) => c !== child);
 }
 
-export default function Preview() {
+export default function Preview({darkMode}: {darkMode: boolean}) {
   const [localChildrens, setLocalChildrens] = useState<ReactNode[]>([]);
 
   useEffect(() => {
@@ -24,26 +24,19 @@ export default function Preview() {
   }, []);
 
   return (
-    <Theme radius="full">
-      <Flex
-        display="flex"
-        justify="center"
-        align="center"
-        gap="2"
-        m="4"
-        mt="0"
-        p="4"
-        pr="8"
-        pl="8"
-        position="absolute"
-        width="75%"
-        height="75%"
-        top="10%"
-        left="12.5%"
-        className="shadow bg-red-300 rounded-4xl"
-      >
-        {localChildrens}
-      </Flex>
-    </Theme>
+    <Flex
+      display="flex"
+      justify="center"
+      align="center"
+      gap="2"
+      m="4"
+      mt="0"
+      p="4"
+      pr="8"
+      pl="8"
+      className={`shadow rounded-4xl w-[75vw] h-[75vh] translate-x-[12.5vw] translate-y-[10vh] pb-[100vh] ` + (darkMode ? "shadow-[#395BC8]" : "")}
+    >
+      {localChildrens}
+    </Flex>
   );
 }
