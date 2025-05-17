@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 import { Story } from '@/sequelize';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './auth/[...nextauth]';
 
 const createStorySchema = z.object({
   title: z.string(),
@@ -8,8 +10,19 @@ const createStorySchema = z.object({
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {
+  const session = await getServerSession(request, response, authOptions)
+
+  if (!session) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
   try {
-    const stories = await Story.findAll();
+    const stories = await Story.findAll({
+      where: {
+        user_email: session.user?.email
+      }
+    });
     response.status(200).json(stories);
   } catch (error) {
     response.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
@@ -17,11 +30,19 @@ async function handleGet(request: NextApiRequest, response: NextApiResponse) {
 }
 
 async function handlePost(request: NextApiRequest, response: NextApiResponse) {
+  const session = await getServerSession(request, response, authOptions)
+
+  if (!session) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
   try {
     const parsedData = createStorySchema.parse(request.body);
     const story = await Story.create({
       title: parsedData.title,
       description: parsedData.description,
+      user_email: session.user?.email
     });
     response.status(201).json(story);
   } catch (error) {
