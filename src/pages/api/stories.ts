@@ -20,7 +20,7 @@ async function handleGet(request: NextApiRequest, response: NextApiResponse) {
   try {
     const stories = await Story.findAll({
       where: {
-        userEmail: session.user?.email
+        user_email: session.user?.email
       }
     });
     response.status(200).json(stories);
