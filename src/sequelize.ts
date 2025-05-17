@@ -10,10 +10,9 @@ const Story = sequelize.define('Story', {
   title: DataTypes.STRING,
   description: DataTypes.STRING,
   tone: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM('Dramatic', 'Ironic', 'Super Cringe', 'Classy', 'Touching', 'Absurd', 'Passive-Aggressive', 'Honest', 'Dark'),
     defaultValue: 'Dramatic',
     allowNull: false,
-    values: ['Dramatic', 'Ironic', 'Super Cringe', 'Classy', 'Touching', 'Absurd', 'Passive-Aggressive', 'Honest', 'Dark']
   },
   user_email: {
     type: DataTypes.STRING,
