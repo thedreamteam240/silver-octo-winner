@@ -48,6 +48,19 @@ type StoryViewProps = {
   setStoryID: (storyID: number | null) => void;
 }
 
+interface Image {
+  id: number;
+  type: string;
+  content: string;
+  user_email: string;
+}
+
+interface Video {
+  id: number;
+  url: string;
+  user_email: string;
+}
+
 type AccentColor = 'tomato' | 'red' | 'crimson' | 'pink' | 'plum' | 'purple' | 'violet' | 'indigo' | 'blue' | 'cyan' | 'teal' | 'green' | 'grass' | 'brown' | 'orange' | 'sky' | 'mint' | 'lime' | 'yellow' | 'amber' | 'gold' | 'bronze' | 'gray';
 type GrayColor = 'gray' | 'mauve' | 'slate' | 'sage' | 'olive' | 'sand';
 type Radius = 'none' | 'small' | 'medium' | 'large' | 'full';
@@ -150,7 +163,7 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
         const response = await api.get<Story>(`/stories/${story_id}`);
         setStory(response.data);
         console.log(response.data);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch story');
       } finally {
         setLoading(false);
@@ -164,7 +177,7 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
   if (error) return <Error />;
   if (!story) return null;
 
-  const renderContentItem = (item: ContentItem) => {
+  const renderContentItem = async (item: ContentItem) => {
     const style = {
       position: 'absolute' as const,
       left: `${item.position.x}px`,
@@ -187,19 +200,31 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
           </Text>
         );
       case 'image':
+        const image = await api.get<Image>(`/images/${item.data.imageId}`);
+        if (!image.data) {
+          console.error('Image not found');
+          return null;
+        }
+
         return (
           <img
             key={item.uid}
-            src={item.data.content}
+            src={`data:image/${image.data.type};base64,${image.data.content}`}
             alt={item.data.alt}
             style={style}
           />
         );
       case 'video':
+        const video = await api.get<Video>(`/videos/${item.data.videoId}`);
+        if (!video.data) {
+          console.error('Video not found');
+          return null;
+        }
+
         return (
           <video
             key={item.uid}
-            src={item.data.url}
+            src={video.data.url}
             autoPlay={item.data.autoplay}
             controls={item.data.controls}
             style={style}

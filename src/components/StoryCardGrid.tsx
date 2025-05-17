@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Card, Grid, Inset, Strong, Text } from "@radix-ui/themes";
+import { Box, Button, Card, Grid, Text } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import Loading from "@/components/Loading";
