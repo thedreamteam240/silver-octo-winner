@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 
-import { IconButton, Heading, Avatar, Flex, Theme } from "@radix-ui/themes";
+import { IconButton, Avatar, Flex, Theme } from "@radix-ui/themes";
 
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import HeadTitle from "./HeadTitle";
+import AvatarDropMenu from "./AvatarDropMenu";
 
 interface IAvatar {
   name: string;
   image: string;
 }
 
-export default function HeadNav() {
+export default function HeadNav({darkMode, setDarkMode}: {darkMode: boolean, setDarkMode: (darkMode: boolean) => void}) {
   const [title, setTitle] = useState<string>("Untitled");
   const [avatar, setAvatar] = useState<IAvatar>({
     name: "John Doe",
@@ -19,7 +21,6 @@ export default function HeadNav() {
   });
 
   return (
-    <Theme radius="full">
     <Flex
       display="flex"
       justify="between"
@@ -34,41 +35,23 @@ export default function HeadNav() {
       width="80%"
       top="0"
       left="50%"
-      className="shadow rounded-b-4xl translate-x-[-50%]"
+      className={`shadow rounded-b-4xl translate-x-[-50%] ` + (darkMode ? "bg-[#18191b]" : "")}
     >
-        <span>
-          <IconButton variant="ghost" size="4">
-            <HamburgerMenuIcon width="22" height="22" />
-          </IconButton>
-        </span>
-
-        <span>
-          <Heading as="h1" align="center" size="6">
-            {title}
-          </Heading>
-        </span>
-        <span>
-          <IconButton variant="ghost" size="4">
-            <Avatar
-              src={avatar.image}
-              fallback={_avatarFallback(avatar.name)}
-              size="3"
-            />
-          </IconButton>
-        </span>
-      </Flex>
-    </Theme>
+      <span>
+        <IconButton variant="ghost" size="4">
+          <HamburgerMenuIcon width="22" height="22" />
+        </IconButton>
+      </span>
+      <span>
+        <HeadTitle title={title} />
+      </span>
+      <span>
+        <AvatarDropMenu
+          avatar={avatar}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+        />
+      </span>
+    </Flex>
   );
-}
-
-//////////////////////
-// Private funtions //
-//////////////////////
-
-function _avatarFallback(name: string) {
-  const initials = name
-    .split(" ")
-    .map((word) => word.charAt(0))
-    .join("");
-  return initials;
 }
