@@ -10,7 +10,7 @@ export default function LeftSideMenu({editor} : {editor: EditorPanel}) {
 
     return (
       <Theme radius="large">
-        <div className="flex flex-row absolute right-0 top-[10%] justify-center items-center">
+        <div className="flex flex-row fixed right-0 top-1/2 transform -translate-y-1/2 justify-center items-center z-50">
           <IconButton
             size="4"
             className="rounded-r-none"
@@ -27,7 +27,7 @@ export default function LeftSideMenu({editor} : {editor: EditorPanel}) {
           <div>
             <div
               className={`flex flex-col shadow-lg rounded-l-lg transition-all duration-300 ${
-                isOpen ? "w-64" : "w-0 overflow-hidden"
+          isOpen ? "w-64" : "w-0 overflow-hidden"
               }`}
             >
               {editor}
