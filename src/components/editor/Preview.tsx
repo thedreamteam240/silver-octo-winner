@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Theme } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import React, { ReactNode, useEffect, useState } from "react";
 
 
