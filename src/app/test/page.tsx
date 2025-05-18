@@ -10,6 +10,7 @@ import TextEditorPanel from "@/components/editor/editors/TextEditorPanel";
 import { DraggableText, DraggableImage, DraggableVideo, DraggableShape } from "@/components/editor/DraggableComponent";
 import { IText, IImage, IVideo, IShape } from "@/interfaces/Component";
 import Draggable from "react-draggable";
+import Editor from "@/components/Editor";
 
 const DEFAULT_TEXT = {
   fontColor: "#000000",
@@ -49,25 +50,7 @@ const DEFAULT_SHAPE = {
 } satisfies IShape;
 
 export default function Test(){
-    const [darkMode, setDarkMode] = useState<boolean>(false);
-    const [children, setChildren] = useState<ReactNode[]>([]);
     return (
-      <Theme appearance={darkMode ? "dark" : "light"} radius="full">
-        <div>
-          <Button onClick={() => setChildren([...children, <DraggableText props={DEFAULT_TEXT} />])}>
-            Text
-          </Button>
-          <Button onClick={() => setChildren([...children, <DraggableImage props={DEFAULT_IMAGE} />])}>
-            Image
-          </Button>
-          <Button onClick={() => setChildren([...children, <DraggableVideo props={DEFAULT_VIDEO} />])}>
-            Video
-          </Button>
-          <Button onClick={() => setChildren([...children, <DraggableShape props={DEFAULT_SHAPE} />])}>
-            Shape
-          </Button>
-          {children}
-        </div>
-      </Theme>
+      <Editor storyId={0} />
     );
 }

@@ -1,10 +1,11 @@
-import { AlertDialog, Button, Text, TextField, Theme, Tooltip } from "@radix-ui/themes";
+import { AlertDialog, Button, Grid, Text, TextField, Theme, Tooltip } from "@radix-ui/themes";
 import { IconButton } from "@radix-ui/themes";
 import { MagnifyingGlassIcon, VideoIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function VideosPicker() {
     const [url, setUrl] = useState("");
+    const [userVideos, setUserVideos] = useState([]);
 
     const handleSubmit = async () => {
         try {
@@ -26,6 +27,20 @@ export default function VideosPicker() {
             console.error('Error saving video:', error);
         }
     };
+
+    const fetchUserVideos = async () => {
+        try {
+            const response = await fetch('/api/videos');
+            const data = await response.json();
+            setUserVideos(data);
+        } catch (error) {
+            console.error('Error fetching videos:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserVideos();
+    }, [userVideos]);
 
     return (
       <Theme radius="large">
@@ -57,6 +72,20 @@ export default function VideosPicker() {
                 </TextField.Slot>
               </TextField.Root>
             </div>
+            <Grid
+              className="mt-4 w-96 overflow-y-scroll"
+              columns={"2"}
+              gap="2"
+              >
+              {userVideos.map((video: any, index) => (
+                <div key={index} className="flex items-center justify-center">
+                  <video width="100%" controls>
+                    <source src={video.url} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ))}
+              </Grid>
             <div className="flex justify-between mt-8">
               <AlertDialog.Cancel>
                 <Button size="2" variant="outline" color="red">

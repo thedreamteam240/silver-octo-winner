@@ -1,10 +1,21 @@
-import { AlertDialog, Button, Text, TextField, Theme, Tooltip } from "@radix-ui/themes";
+import { AlertDialog, Button, Grid, Text, TextField, Theme, Tooltip } from "@radix-ui/themes";
 import { IconButton } from "@radix-ui/themes";
 import { ImageIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function PicturesPicker() {
     const [url, setUrl] = useState("");
+    const [userImages, setUserImages] = useState([]);
+
+    const fetchUserImages = async () => {
+        try {
+            const response = await fetch('/api/images');
+            const data = await response.json();
+            setUserImages(data);
+        } catch (error) {
+            console.error('Error fetching images:', error);
+        }
+    };
 
     const handleSubmit = async () => {
         try {
@@ -26,6 +37,10 @@ export default function PicturesPicker() {
             console.error('Error saving image:', error);
         }
     };
+
+    useEffect(() => {
+        fetchUserImages();
+    }, [userImages]);
 
     return (
       <Theme radius="large">
@@ -57,6 +72,15 @@ export default function PicturesPicker() {
                 </TextField.Slot>
               </TextField.Root>
             </div>
+            <Grid
+              columns={"3"}
+              gap="2"
+              className="mt-4"
+              >
+              {userImages.map((image: any) => (
+                  <img src={image.url} alt="User Image" className="w-full h-auto rounded-lg" />
+              ))}
+            </Grid>
             <div className="flex justify-between mt-8">
               <AlertDialog.Cancel>
                 <Button size="2" variant="outline" color="red">

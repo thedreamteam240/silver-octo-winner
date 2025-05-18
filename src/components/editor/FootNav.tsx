@@ -51,22 +51,6 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
       } ` + (darkMode ? "shadow-[#395BC8] bg-[#18191b]" : "bg-white")}
       style={{ transition: "opacity 0.5s, transform 0.5s" }}
     >
-      {!isIntemplates && (
-        <Tooltip content="Move Object">
-          <IconButton
-            variant={!isMoving ? "ghost" : "solid"}
-            size="4"
-            onClick={() =>
-              !isMoving ? handleTransition(() => setIsMoving(true)) : null
-            }
-          >
-            <MoveIcon width="22" height="22" />
-          </IconButton>
-        </Tooltip>
-      )}
-      {!isMoving && !isIntemplates && (
-        <DividerVerticalIcon width="22" height="22" />
-      )}
       {!isMoving && !isIntemplates && (
         <DropdownMenu.Root>
           <Tooltip content="Add shapes">
@@ -101,41 +85,6 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
       )}
       {!isMoving && !isIntemplates && <PicturesPicker />}
       {!isMoving && !isIntemplates && <VideosPicker />}
-      {!isMoving && !isIntemplates && (
-        <DividerVerticalIcon width="22" height="22" />
-      )}
-      {!isMoving && (
-        <Tooltip content="Edit Templates">
-          <IconButton
-            variant={!isIntemplates ? "ghost" : "solid"}
-            size="4"
-            onClick={() =>
-              !isIntemplates
-                ? handleTransition(() => setIsIntemplates(true))
-                : null
-            }
-          >
-            <TableIcon width="22" height="22" />
-          </IconButton>
-        </Tooltip>
-      )}
-      {(isMoving || isIntemplates) && (
-        <Tooltip content="Exit">
-          <IconButton
-            variant="ghost"
-            size="4"
-            color="gray"
-            onClick={() =>
-              handleTransition(() => {
-                setIsIntemplates(false);
-                setIsMoving(false);
-              })
-            }
-          >
-            <ExitIcon width="22" height="22" />
-          </IconButton>
-        </Tooltip>
-      )}
       <style jsx global>{`
         .footnav-transition {
           opacity: 1;
