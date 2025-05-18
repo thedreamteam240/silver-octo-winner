@@ -21,7 +21,6 @@ export default function Editor({ storyId }: EditorProps) {
         <FootNav darkMode={darkMode} />
         <div className={`flex flex-col w-[100%] h-[100%] gap-2 ` + (darkMode ? "bg-[#18191b]" : "")}>
           <Preview darkMode={darkMode} />
-          <LeftSideMenu />
         </div>
       </div>
     </Theme>

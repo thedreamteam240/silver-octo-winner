@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { IconButton, Flex } from "@radix-ui/themes";
 
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { HamburgerMenuIcon, HomeIcon } from "@radix-ui/react-icons";
 import HeadTitle from "./HeadTitle";
 import AvatarDropMenu from "./AvatarDropMenu";
 
@@ -38,8 +38,8 @@ export default function HeadNav({darkMode, setDarkMode}: {darkMode: boolean, set
       className={`shadow rounded-b-4xl z-20 translate-x-[-50%] ` + (darkMode ? "shadow-[#395BC8] bg-[#18191b]" : "bg-white")}
     >
       <span>
-        <IconButton variant="ghost" size="4">
-          <HamburgerMenuIcon width="22" height="22" />
+        <IconButton variant="ghost" size="4" onClick={() => window.document.location.href = "/"}>
+          <HomeIcon width="22" height="22" />
         </IconButton>
       </span>
       <span>

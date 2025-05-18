@@ -21,7 +21,7 @@ export default function Page() {
 
   return (
     <SessionProvider>
-      <PageContent />
+      <Authenticated />
     </SessionProvider>
   );
 }
