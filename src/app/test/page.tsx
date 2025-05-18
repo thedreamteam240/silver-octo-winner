@@ -1,28 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 import FootNav from "@/components/editor/FootNav";
 import HeadNav from "@/components/editor/HeadNav";
-import { Theme } from "@radix-ui/themes";
+import { Button, Theme } from "@radix-ui/themes";
 import LeftSideMenu from "@/components/editor/LeftSideMenu";
 import TextEditorPanel from "@/components/editor/editors/TextEditorPanel";
+import { DraggableText, DraggableImage, DraggableVideo, DraggableShape } from "@/components/editor/DraggableComponent";
+import { IText, IImage, IVideo, IShape } from "@/interfaces/Component";
+import Draggable from "react-draggable";
+
+const DEFAULT_TEXT = {
+  fontColor: "#000000",
+  fontSize: 16,
+  fontFamily: "mono",
+  isBold: false,
+  isItalic: false,
+  posx: 0,
+  posy: 0,
+  text: "Hello World",
+} satisfies IText;
+
+const DEFAULT_IMAGE = {
+  src: "https://picsum.photos/426/240",
+  alt: "Image",
+  width: 640,
+  height: 360,
+  posx: 0,
+  posy: 0,
+} satisfies IImage;
+
+const DEFAULT_VIDEO = {
+  src: "https://www.w3schools.com/html/mov_bbb.mp4",
+  width: 640,
+  height: 360,
+  posx: 0,
+  posy: 0,
+} satisfies IVideo;
+
+const DEFAULT_SHAPE = {
+  type: "triangle",
+  infillColor: "#000000",
+  width: 100,
+  height: 100,
+  posx: 0,
+  posy: 0,
+} satisfies IShape;
 
 export default function Test(){
     const [darkMode, setDarkMode] = useState<boolean>(false);
+    const [children, setChildren] = useState<ReactNode[]>([]);
     return (
       <Theme appearance={darkMode ? "dark" : "light"} radius="full">
-        <div className={`flex flex-col w-[100%] h-[100%] gap-2 ` + (darkMode ? "bg-[#18191b]" : "")}>
-          <HeadNav darkMode={darkMode} setDarkMode={setDarkMode} />
-          <FootNav darkMode={darkMode} />
-          <LeftSideMenu editor={<TextEditorPanel props={{
-            color: "#000000",
-            size: 12,
-            style: "mono",
-          }} />} />
-            <span className="flex flex-col items-center justify-center w-full h-full">
-                <br />
-            </span>
+        <div>
+          <Button onClick={() => setChildren([...children, <DraggableText props={DEFAULT_TEXT} />])}>
+            Text
+          </Button>
+          <Button onClick={() => setChildren([...children, <DraggableImage props={DEFAULT_IMAGE} />])}>
+            Image
+          </Button>
+          <Button onClick={() => setChildren([...children, <DraggableVideo props={DEFAULT_VIDEO} />])}>
+            Video
+          </Button>
+          <Button onClick={() => setChildren([...children, <DraggableShape props={DEFAULT_SHAPE} />])}>
+            Shape
+          </Button>
+          {children}
         </div>
       </Theme>
     );
