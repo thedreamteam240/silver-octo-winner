@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Story } from '@/sequelize';
+import { Video } from '@/sequelize';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
 
@@ -18,9 +18,9 @@ async function handleGet(request: NextApiRequest, response: NextApiResponse) {
   }
 
   try {
-    const video = await Story.findByPk(parseInt(video_id as string))
+    const video = await Video.findByPk(parseInt(video_id as string))
     if (!video) {
-      response.status(404).json({ error: 'Story not found' });
+      response.status(404).json({ error: 'Video not found' });
       return;
     }
     if (video.getDataValue('user_email') !== session.user?.email) {
@@ -48,9 +48,9 @@ async function handleDelete(request: NextApiRequest, response: NextApiResponse) 
   }
 
   try {
-    const video = await Story.findByPk(parseInt(video_id as string));
+    const video = await Video.findByPk(parseInt(video_id as string));
     if (!video) {
-      response.status(404).json({ error: 'Story not found' });
+      response.status(404).json({ error: 'Video not found' });
       return;
     }
     if (video.getDataValue('user_email') !== session.user?.email) {
@@ -58,7 +58,7 @@ async function handleDelete(request: NextApiRequest, response: NextApiResponse) 
       return;
     }
     await video.destroy();
-    response.status(200).json({ message: 'Story deleted successfully' });
+    response.status(200).json({ message: 'Video deleted successfully' });
   } catch (error) {
     response.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
   }
