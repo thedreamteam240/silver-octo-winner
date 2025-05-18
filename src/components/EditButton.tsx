@@ -9,8 +9,8 @@ interface EditButtonProps {
 }
 
 export default function EditButton({ storyID }: EditButtonProps) {
-  function handleEdit(title: string, description: string) {
-    api.put(`/stories/${storyID}`, { title, description }).then(() => {
+  function handleEdit(title: string, description: string, content: object = []) {
+    api.put(`/stories/${storyID}`, { title, description, content }).then(() => {
       console.log("Story edited");
       window.location.reload(); // Refresh the page after edit
     }).catch((error: Error) => {

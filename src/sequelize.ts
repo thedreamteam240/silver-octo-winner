@@ -69,28 +69,28 @@ await sequelize.sync();
 // Insert example
 await Video.create({
   url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-  user_email: "xavierclementantoine@gmail.com"
+  user_email: "jsmith@example.com"
 });
 
 await Video.create({
   url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-  user_email: "xavierclementantoine@gmail.com"
+  user_email: "jsmith@example.com"
 });
 
 await Video.create({
   url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-  user_email: "xavierclementantoine@gmail.com"
+  user_email: "jsmith@example.com"
 });
 
 
 await Image.create({
   url: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-  user_email: "xavierclementantoine@gmail.com"
+  user_email: "jsmith@example.com"
 });
 
 await Image.create({
   url: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-  user_email: "xavierclementantoine@gmail.com"
+  user_email: "jsmith@example.com"
 });
 
 
@@ -98,7 +98,7 @@ await Image.create({
 await Story.create({
   title: "Sample Story 1",
   description: "A demo story showcasing various content types",
-  user_email: "xavierclementantoine@gmail.com",
+  user_email: "jsmith@example.com",
   content: JSON.stringify([
     {
       uid: "text-1",
@@ -112,7 +112,7 @@ await Story.create({
 await Story.create({
   title: "Sample Story 2", 
   description: "A story about nature",
-  user_email: "xavierclementantoine@gmail.com",
+  user_email: "jsmith@example.com",
   content: JSON.stringify([
     {
       uid: "image-1",
@@ -127,7 +127,7 @@ await Story.create({
 await Story.create({
   title: "Sample Story 3",
   description: "A video tutorial",
-  user_email: "xavierclementantoine@gmail.com",
+  user_email: "jsmith@example.com",
   content: JSON.stringify([
     {
       uid: "video-1",
@@ -142,7 +142,7 @@ await Story.create({
 await Story.create({
   title: "Sample Story 4",
   description: "An embedded content example",
-  user_email: "xavierclementantoine@gmail.com",
+  user_email: "jsmith@example.com",
   content: JSON.stringify([
     {
       uid: "embed-1",
@@ -157,7 +157,7 @@ await Story.create({
 await Story.create({
   title: "Sample Story 5",
   description: "Mixed content types",
-  user_email: "xavierclementantoine@gmail.com",
+  user_email: "jsmith@example.com",
   content: JSON.stringify([
     {
       uid: "text-1",
@@ -178,7 +178,7 @@ await Story.create({
 await Story.create({
   title: "Sample Story 6",
   description: "Complex layout example",
-  user_email: "xavierclementantoine@gmail.com",
+  user_email: "jsmith@example.com",
   content: JSON.stringify([
     {
       uid: "text-1",
