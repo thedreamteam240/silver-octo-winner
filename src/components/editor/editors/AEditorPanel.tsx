@@ -5,9 +5,9 @@ export interface EditorSection {
     editors: Editor | Editor[];
 }
 
-export default function AEditorPanel({sections} : {sections: EditorSection | EditorSection[]}) {
+export default function AEditorPanel({sections, darkMode, children} : {sections: EditorSection | EditorSection[], darkMode: boolean, children: React.ReactNode}) {
     return (
-        <div className="flex flex-col w-full h-full gap-2 overflow-y-auto p-4 border-1 border-gray-500 rounded-lg">
+        <div className={`flex flex-col w-full h-full gap-2 overflow-y-auto p-4 border-1 border-gray-500 rounded-lg ${darkMode ? "bg-[#18191b]" : "bg-white"}`}>
             {Array.isArray(sections) ? (
                 sections.map((section, index) => (
                     <div key={index} className="flex flex-col gap-2">
@@ -37,6 +37,7 @@ export default function AEditorPanel({sections} : {sections: EditorSection | Edi
                     )}
                 </div>
             )}
+            {children}
         </div>
     )
 }
