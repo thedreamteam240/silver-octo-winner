@@ -50,8 +50,7 @@ type StoryViewProps = {
 
 interface Image {
   id: number;
-  type: string;
-  content: string;
+  url: string;
   user_email: string;
 }
 
@@ -156,7 +155,6 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
   const [story, setStory] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [preloadedContent, setPreloadedContent] = useState<Record<string, Image | Video>>({});
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -173,28 +171,6 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
 
     fetchStory();
   }, [story_id]);
-
-  useEffect(() => {
-    const preloadContent = async () => {
-      if (!story) return;
-      const contentData: Record<string, Image | Video> = {};
-      const parsedContent = JSON.parse(story.content) as ContentItem[];
-
-      for (const item of parsedContent) {
-        if (item.type === 'image' && item.data.imageId) {
-          const response = await api.get<Image>(`/images/${item.data.imageId}`);
-          contentData[item.data.imageId] = response.data;
-        } else if (item.type === 'video' && item.data.videoId) {
-          const response = await api.get<Video>(`/videos/${item.data.videoId}`);
-          contentData[item.data.videoId] = response.data;
-        }
-      }
-
-      setPreloadedContent(contentData);
-    };
-
-    preloadContent();
-  }, [story]);
 
   if (loading) return <Loading />;
   if (error) return <Error />;
@@ -223,29 +199,42 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
           </Text>
         );
       case 'image':
-       return (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={item.uid}
-            src={item.data.imageId && preloadedContent[item.data.imageId] && 'type' in preloadedContent[item.data.imageId] && 'content' in preloadedContent[item.data.imageId] ? 
-              `data:image/${(preloadedContent[item.data.imageId] as Image).type};base64,${(preloadedContent[item.data.imageId] as Image).content}`
-              : ''}
-            alt={item.data.alt}
-            style={style}
-          />
-        );
+        api.get<Image>(`/images/${item.data.imageId}`).then(response => {
+          const image = response.data;
+          console.log(image);
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={item.uid}
+              src={image?.url}
+              alt={item.data.alt}
+              style={style}
+            />
+          );
+        }).catch(error => {
+          console.error(error);
+          return null;
+        });
+
       case 'video':
-        return (
-          <video
-            key={item.uid}
-            src={item.data.videoId && preloadedContent[item.data.videoId] && 'url' in preloadedContent[item.data.videoId] ? 
-              (preloadedContent[item.data.videoId] as Video).url 
-              : ''}
-            autoPlay={item.data.autoplay}
-            controls={item.data.controls}
-            style={style}
-          />
-        );
+        console.log(item.data.videoId);
+        api.get<Video>(`/videos/${item.data.videoId}`).then(response => {
+          const video = response.data;
+          console.log(video);
+          return (
+            <video
+              key={item.uid}
+              src={video?.url}
+              autoPlay={item.data.autoplay}
+              controls={item.data.controls}
+              style={style}
+            />
+          );
+        }).catch(error => {
+          console.error(error);
+          return null;
+        });
+
       case 'embed':
         return (
           <iframe
@@ -262,7 +251,7 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
 
   return (
     <Theme appearance={toneThemes[story.tone].appearance}>
-      <Box style={{ 
+      <Box style={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -271,7 +260,7 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
         overflow: 'hidden'
       }}>
         {/* Story Content Canvas */}
-        <Box style={{ 
+        <Box style={{
           position: 'relative',
           width: '100%',
           height: '100%',

@@ -1,11 +1,8 @@
-import React, { ReactNode, useState } from "react";
-
-import { ChevronLeftIcon, ChevronRightIcon, GearIcon } from "@radix-ui/react-icons";
+import React, { useState } from "react";
+import { ChevronRightIcon, GearIcon } from "@radix-ui/react-icons";
 import { IconButton, Theme } from "@radix-ui/themes";
 
-import { EditorPanel } from "@/types";
-
-export default function LeftSideMenu({darkMode} : {darkMode: boolean}) {
+export default function LeftSideMenu() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -27,7 +24,7 @@ export default function LeftSideMenu({darkMode} : {darkMode: boolean}) {
           <div>
             <div
               className={`flex flex-col shadow-lg rounded-l-lg transition-all duration-300 ${
-          isOpen ? "w-64" : "w-0 overflow-hidden"
+                isOpen ? "w-64" : "w-0 overflow-hidden"
               }`}
             >
             </div>
