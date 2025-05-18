@@ -17,6 +17,7 @@ import PicturesPicker from "./PicturesPicker";
 import VideosPicker from "./VideosPicker";
 import { addChildren } from "./Preview";
 import TextComponent from "./components/Text/Text";
+import { boolean } from "zod";
 
 export default function FootNav({darkMode}: {darkMode: boolean}) {
   const [isMoving, setIsMoving] = useState<boolean>(false);
@@ -92,7 +93,7 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
         <Tooltip content="Add text">
           <IconButton variant="ghost" size="4" onClick={() => {
             const textId = crypto.randomUUID();
-            addChildren(<TextComponent id={textId} key={textId} content="Hello World" />)
+            addChildren(<TextComponent id={textId} key={textId} content="Hello World" darkMode={darkMode} />)
           }}>
             <TextIcon width="22" height="22" />
           </IconButton>
@@ -147,3 +148,7 @@ export default function FootNav({darkMode}: {darkMode: boolean}) {
     </Flex>
   );
 }
+
+/*
+
+*/

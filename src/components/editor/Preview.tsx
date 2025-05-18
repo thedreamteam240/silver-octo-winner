@@ -9,8 +9,9 @@ let childrens: ReactNode[] = [];
 export function addChildren(child: ReactNode) {
   childrens = [...childrens, child];
 }
-export function removeChildren(child: ReactNode) {
-  childrens = childrens.filter((c) => c !== child);
+
+export function removeChildren() {
+  childrens = [];
 }
 
 export default function Preview({darkMode}: {darkMode: boolean}) {
