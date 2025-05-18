@@ -8,6 +8,7 @@ import Error from "@/components/Error";
 import CreateButton from "@/components/CreateButton";
 import EditButton from "@/components/EditButton";
 import DeleteButton from "@/components/DeleteButton";
+import Editor from "@/components/Editor";
 
 interface Story {
   id: number;
@@ -21,10 +22,10 @@ type StoryCardProps = {
   title: string;
   description: string;
   onStoryClick: (storyID: number) => void;
-  onSelect: (storyID: number) => void;
+  onEdit: (storyID: number) => void;
 }
 
-function StoryCard({ id, title, description, onStoryClick }: StoryCardProps) {
+function StoryCard({ id, title, description, onStoryClick, onEdit }: StoryCardProps) {
   return (
     <Box className="story-card-container">
       <Card
@@ -63,7 +64,13 @@ function StoryCard({ id, title, description, onStoryClick }: StoryCardProps) {
           >
             Read Story
           </Button>
-          <EditButton storyID={id} />
+          <Button
+            size="3"
+            variant="soft"
+            onClick={() => onEdit(id)}
+          >
+            Edit Story
+          </Button>
           <DeleteButton storyID={id} />
         </Flex>
       </Card>
@@ -79,7 +86,7 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // Removed unused setSelectedStoryId state setter
+  const [editingStoryId, setEditingStoryId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -104,8 +111,19 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
     return <Error />;
   }
 
-  function setSelectedStoryId(storyID: number): void {
-    throw new Error("Function not implemented.");
+  if (editingStoryId !== null) {
+    return (
+      <Box style={{ height: '100vh', width: '100vw', position: 'fixed', top: 0, left: 0, zIndex: 1000 }}>
+        <Editor storyId={editingStoryId} />
+        <Button
+          size="3"
+          style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 1001 }}
+          onClick={() => setEditingStoryId(null)}
+        >
+          Back to Stories
+        </Button>
+      </Box>
+    );
   }
 
   return (
@@ -134,7 +152,7 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
             description={story.description}
             key={story.id}
             onStoryClick={onStoryClick}
-            onSelect={setSelectedStoryId}
+            onEdit={setEditingStoryId}
           />
         ))}
       </Grid>
