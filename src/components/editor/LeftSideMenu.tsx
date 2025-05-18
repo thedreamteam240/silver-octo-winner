@@ -5,7 +5,7 @@ import { IconButton, Theme } from "@radix-ui/themes";
 
 import { EditorPanel } from "@/types";
 
-export default function LeftSideMenu({editor} : {editor: EditorPanel}) {
+export default function LeftSideMenu({darkMode} : {darkMode: boolean}) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -30,7 +30,6 @@ export default function LeftSideMenu({editor} : {editor: EditorPanel}) {
           isOpen ? "w-64" : "w-0 overflow-hidden"
               }`}
             >
-              {editor}
             </div>
           </div>
         </div>

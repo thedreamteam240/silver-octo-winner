@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex } from "@radix-ui/themes";
+import { Box } from "@radix-ui/themes";
 import React, { ReactNode, useEffect, useState } from "react";
 
 
@@ -24,19 +24,19 @@ export default function Preview({darkMode}: {darkMode: boolean}) {
   }, []);
 
   return (
-    <Flex
-      display="flex"
-      justify="center"
-      align="center"
-      gap="2"
+    <Box
       m="4"
       mt="0"
       p="4"
       pr="8"
       pl="8"
-      className={`shadow rounded-4xl w-[75vw] h-[75vh] translate-x-[12.5vw] translate-y-[10vh] pb-[100vh] ` + (darkMode ? "shadow-[#395BC8]" : "")}
+      width={"75vw"}
+      height={"fit-content"}
+      maxHeight={"fit-content"}
+      maxWidth={"75vw"}
+      className={`shadow rounded-4xl translate-x-[12.5vw] translate-y-[10vh] pb-[100vh] bg-white ` + (darkMode ? "shadow-[#395BC8]" : "")}
     >
       {localChildrens}
-    </Flex>
+    </Box>
   );
 }
