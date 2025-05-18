@@ -1,26 +1,41 @@
+import { useState } from "react";
+
 import AEditorPanel from "./AEditorPanel";
-import FontStyleEditor from "./common/FontStyle";
+
+import FontFamillyEditor from "./common/FontFamilly";
 import FontSizeEditor from "./common/FontSize";
 import ColorEditor from "./common/Color";
 
-interface TextComponent {
-  fontSize: string;
-  color: string;
+import { EditorFont } from "@/types";
+import Toggle from "./common/Toggle";
+
+interface TextEditorPanelProps {
+    style: EditorFont;
+    size: number;
+    color: string;
 }
 
-export default function TextEditorPanel({ component }: { component: TextComponent }) {
-  return (
-    <AEditorPanel
-      sections={[
-        {
-          name: "Text",
-          editors: [
-            <FontStyleEditor key="style" name="Style" onChange={() => null} value="Mono" />,
-            <FontSizeEditor key="size" name="Size" value={component.fontSize} onChange={(value: string) => component.fontSize = value} />,
-            <ColorEditor key="color" name="Color" value={component.color} onChange={(value: string) => component.color = value} />,
-          ],
-        },
-      ]}
-    />
-  )
+export default function TextEditorPanel({props} : {props: TextEditorPanelProps}) {
+    const [style, setStyle] = useState<EditorFont>(props.style);
+    const [size, setSize] = useState<number>(props.size);
+    const [color, setColor] = useState<string>(props.color);
+    const [isBold, setIsBold] = useState<boolean>(false);
+    const [isItalic, setIsItalic] = useState<boolean>(false);
+
+    return (
+        <AEditorPanel
+            sections={[
+                {
+                    name: "Text",
+                    editors: [
+                        <FontFamillyEditor name="Style" onChange={(value: EditorFont) => setStyle(value)} value={style} />,
+                        <FontSizeEditor name="Size" value={size} onChange={(value: number) => setSize(value)} />,
+                        <ColorEditor name="Color" value={color} onChange={(value: string) => setColor(value)} />,
+                        <Toggle name="Bold" value={isBold} onChange={(value: boolean) => setIsBold(value)} />,
+                        <Toggle name="Italic" value={isItalic} onChange={(value: boolean) => setIsItalic(value)} />,
+                    ],
+                },
+            ]}
+            />
+    )
 }

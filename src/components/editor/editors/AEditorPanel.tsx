@@ -7,7 +7,7 @@ export interface EditorSection {
 
 export default function AEditorPanel({sections} : {sections: EditorSection | EditorSection[]}) {
     return (
-        <div className="flex flex-col w-full h-full gap-2 overflow-y-auto">
+        <div className="flex flex-col w-full h-full gap-2 overflow-y-auto p-4 border-1 border-gray-500 rounded-lg">
             {Array.isArray(sections) ? (
                 sections.map((section, index) => (
                     <div key={index} className="flex flex-col gap-2">
