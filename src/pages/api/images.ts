@@ -5,8 +5,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 const createImageSchema = z.object({
-  type: z.string(),
-  content: z.string(),
+  url: z.string()
 });
 
 async function handleGet(request: NextApiRequest, response: NextApiResponse) {
@@ -40,8 +39,7 @@ async function handlePost(request: NextApiRequest, response: NextApiResponse) {
   try {
     const parsedData = createImageSchema.parse(request.body);
     const image = await Image.create({
-      type: parsedData.type,
-      content: parsedData.content,
+      url: parsedData.url,
       user_email: session.user?.email
     });
     response.status(201).json(image);

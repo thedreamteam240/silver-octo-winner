@@ -28,11 +28,11 @@ export default function TextEditorPanel({props} : {props: TextEditorPanelProps})
                 {
                     name: "Text",
                     editors: [
-                        <FontFamillyEditor name="Style" onChange={(value: EditorFont) => setStyle(value)} value={style} />,
-                        <FontSizeEditor name="Size" value={size} onChange={(value: number) => setSize(value)} />,
-                        <ColorEditor name="Color" value={color} onChange={(value: string) => setColor(value)} />,
-                        <Toggle name="Bold" value={isBold} onChange={(value: boolean) => setIsBold(value)} />,
-                        <Toggle name="Italic" value={isItalic} onChange={(value: boolean) => setIsItalic(value)} />,
+                        <FontFamillyEditor key="style" name="Style" onChange={(value: EditorFont) => setStyle(value)} value={style} />,
+                        <FontSizeEditor key="size" name="Size" value={size} onChange={(value: number) => setSize(value)} />,
+                        <ColorEditor key="color" name="Color" value={color} onChange={(value: string) => setColor(value)} />,
+                        <Toggle key="bold" name="Bold" value={isBold} onChange={(value: boolean) => setIsBold(value)} />,
+                        <Toggle key="italic" name="Italic" value={isItalic} onChange={(value: boolean) => setIsItalic(value)} />,
                     ],
                 },
             ]}
