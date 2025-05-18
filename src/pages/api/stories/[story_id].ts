@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Story } from '@/sequelize';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
+import { z } from 'zod';
 
 const updateStorySchema = z.object({
   title: z.string(),

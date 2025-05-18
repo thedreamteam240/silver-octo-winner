@@ -104,6 +104,10 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
     return <Error />;
   }
 
+  function setSelectedStoryId(storyID: number): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <Box style={{ padding: '2rem' }}>
       <Box style={{
