@@ -38,12 +38,8 @@ const Image = sequelize.define('Image', {
     autoIncrement: true,
     primaryKey: true,
   },
-  type: {
+  url: {
     type: DataTypes.STRING,
-    allowNull: false
-  },
-  content: {
-    type: DataTypes.TEXT,
     allowNull: false
   },
   user_email: {
@@ -69,6 +65,34 @@ const Video = sequelize.define('Video', {
 });
 
 await sequelize.sync();
+
+// Insert example
+await Video.create({
+  url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  user_email: "xavierclementantoine@gmail.com"
+});
+
+await Video.create({
+  url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+  user_email: "xavierclementantoine@gmail.com"
+});
+
+await Video.create({
+  url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+  user_email: "xavierclementantoine@gmail.com"
+});
+
+
+await Image.create({
+  url: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+  user_email: "xavierclementantoine@gmail.com"
+});
+
+await Image.create({
+  url: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+  user_email: "xavierclementantoine@gmail.com"
+});
+
 
 // Insert sample stories for development/testing
 await Story.create({
@@ -177,5 +201,7 @@ await Story.create({
   ]),
   tone: 'Absurd'
 });
+
+sequelize.sync();
 
 export { sequelize, Story, Image, Video };

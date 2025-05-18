@@ -50,8 +50,7 @@ type StoryViewProps = {
 
 interface Image {
   id: number;
-  type: string;
-  content: string;
+  url: string;
   user_email: string;
 }
 
@@ -223,12 +222,12 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
           </Text>
         );
       case 'image':
-       return (
+        return (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             key={item.uid}
-            src={item.data.imageId && preloadedContent[item.data.imageId] && 'type' in preloadedContent[item.data.imageId] && 'content' in preloadedContent[item.data.imageId] ? 
-              `data:image/${(preloadedContent[item.data.imageId] as Image).type};base64,${(preloadedContent[item.data.imageId] as Image).content}`
+            src={item.data.imageId && preloadedContent[item.data.imageId] && 'url' in preloadedContent[item.data.imageId] ?
+              (preloadedContent[item.data.imageId] as Image).url
               : ''}
             alt={item.data.alt}
             style={style}
@@ -238,8 +237,8 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
         return (
           <video
             key={item.uid}
-            src={item.data.videoId && preloadedContent[item.data.videoId] && 'url' in preloadedContent[item.data.videoId] ? 
-              (preloadedContent[item.data.videoId] as Video).url 
+            src={item.data.videoId && preloadedContent[item.data.videoId] && 'url' in preloadedContent[item.data.videoId] ?
+              (preloadedContent[item.data.videoId] as Video).url
               : ''}
             autoPlay={item.data.autoplay}
             controls={item.data.controls}
@@ -262,7 +261,7 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
 
   return (
     <Theme appearance={toneThemes[story.tone].appearance}>
-      <Box style={{ 
+      <Box style={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -271,7 +270,7 @@ export default function StoryView({ story_id, setStoryID }: StoryViewProps) {
         overflow: 'hidden'
       }}>
         {/* Story Content Canvas */}
-        <Box style={{ 
+        <Box style={{
           position: 'relative',
           width: '100%',
           height: '100%',
