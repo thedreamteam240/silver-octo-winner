@@ -40,7 +40,7 @@ const DEFAULT_VIDEO = {
 } satisfies IVideo;
 
 const DEFAULT_SHAPE = {
-  type: "rectangle",
+  type: "triangle",
   infillColor: "#000000",
   width: 100,
   height: 100,
