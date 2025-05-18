@@ -26,8 +26,6 @@ export default function Page() {
     return (
       <Theme appearance={darkMode ? "dark" : "light"} radius="full" className="h-[100vh] w-[100vw]">
         <div className={`flex flex-col w-[100%] h-[100%] gap-2 ` + (darkMode ? "bg-[#18191b]" : "")}>
-          <HeadNav darkMode={darkMode} setDarkMode={setDarkMode} />
-          <FootNav darkMode={darkMode} />
           <Preview darkMode={darkMode}/>
           <LeftSideMenu darkMode={darkMode} />
         </div>
