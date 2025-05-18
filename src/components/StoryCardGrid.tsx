@@ -115,13 +115,6 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
     return (
       <Box style={{ height: '100vh', width: '100vw', position: 'fixed', top: 0, left: 0, zIndex: 1000 }}>
         <Editor storyId={editingStoryId} />
-        <Button
-          size="3"
-          style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 1001 }}
-          onClick={() => setEditingStoryId(null)}
-        >
-          Back to Stories
-        </Button>
       </Box>
     );
   }

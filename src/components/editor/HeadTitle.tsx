@@ -2,7 +2,24 @@ import { DropdownMenu, Button, Heading } from "@radix-ui/themes";
 
 import { CopyIcon, Link1Icon, Pencil1Icon, RocketIcon, TrashIcon, UploadIcon } from "@radix-ui/react-icons";
 
-export default function HeadTitle({title}: {title: string}) {
+import api from "@/lib/axios";
+
+export default function HeadTitle({title, storyID}: {title: string, storyID: number}) {
+    const deleteStory = async () => {
+      try {
+        api
+          .delete(`/stories/${storyID}`)
+          .then(() => {
+            console.log("Story deleted");
+            window.location.reload(); // Refresh the page after deletion
+          })
+          .catch((error: Error) => {
+            console.error("Error deleting story:", error);
+          });
+      } catch (error) {
+        console.error("Error deleting story:", error);
+      }
+    };
     return (
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
@@ -22,7 +39,7 @@ export default function HeadTitle({title}: {title: string}) {
             <CopyIcon width="16" height="16" />
             Duplicate
           </DropdownMenu.Item>
-          <DropdownMenu.Item color="red">
+          <DropdownMenu.Item color="red" onClick={deleteStory}>
             <TrashIcon width="16" height="16" />
             Delete
           </DropdownMenu.Item>

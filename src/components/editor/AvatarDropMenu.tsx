@@ -5,6 +5,7 @@ import { ExitIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { IAvatar } from "@/interfaces/User";
 
 export default function AvatarDropMenu({avatar, darkMode, setDarkMode}: {avatar: IAvatar, darkMode: boolean, setDarkMode: (darkMode: boolean) => void}) {
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
