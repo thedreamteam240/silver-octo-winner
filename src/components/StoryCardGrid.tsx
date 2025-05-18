@@ -79,7 +79,7 @@ export default function StoryCardGrid({ onStoryClick }: StoryCardGridProps) {
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [, setSelectedStoryId] = useState<number | null>(null);
+  // Removed unused setSelectedStoryId state setter
 
   useEffect(() => {
     const fetchStories = async () => {
