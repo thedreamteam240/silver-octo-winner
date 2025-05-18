@@ -6,8 +6,8 @@ import api from "@/lib/axios";
 
 export default function CreateButton() {
 
-  function handleCreate(name: string, description: string) {
-    api.post(`/stories`, { name, description }).then(() => {
+  function handleCreate(title: string, description: string, content: object = [], tone: string = "Dramatic") {
+    api.post(`/stories`, { title, description, content: JSON.stringify(content), tone }).then(() => {
       console.log("Story created");
       window.location.reload(); // Refresh the page after creation
     }).catch((error: Error) => {
